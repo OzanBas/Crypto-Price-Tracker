@@ -23,7 +23,9 @@ class CPLogoImageView: UIImageView {
         contentMode = .scaleAspectFit
         clipsToBounds = true
         layer.cornerRadius =  10
+        tintColor = .orange
         image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        
     }
     
     

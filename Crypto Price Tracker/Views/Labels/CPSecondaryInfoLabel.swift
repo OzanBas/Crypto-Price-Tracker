@@ -25,16 +25,4 @@ class CPSecondaryInfoLabel: UILabel {
         textColor = .secondaryLabel
         textAlignment = .left
     }
-    
-    
-    func convertAndSetFromInt(from int: Int) {
-        let convertedInt = String(int)
-        self.text = convertedInt
-    }
-    
-    
-    func convertAndSetFromDouble(from double: Double) {
-        let convertedDouble = String(double)
-        self.text = convertedDouble
-    }
 }

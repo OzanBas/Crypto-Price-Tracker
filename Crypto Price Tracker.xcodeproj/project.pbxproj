@@ -22,6 +22,12 @@
 		3FBE33D928FB43060085BF21 /* CPLogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33D828FB43060085BF21 /* CPLogoImageView.swift */; };
 		3FBE33DB28FB442B0085BF21 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33DA28FB442B0085BF21 /* NetworkManager.swift */; };
 		3FBE33DD28FB48030085BF21 /* CPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33DC28FB48030085BF21 /* CPError.swift */; };
+		3FBE33DF28FD931E0085BF21 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33DE28FD931E0085BF21 /* String+Ext.swift */; };
+		3FBE33E128FD9E420085BF21 /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33E028FD9E420085BF21 /* Double+Ext.swift */; };
+		3FBE33E328FDFB4F0085BF21 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33E228FDFB4F0085BF21 /* CoinModel.swift */; };
+		3FBE33E628FECF510085BF21 /* CPAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33E528FECF510085BF21 /* CPAlertViewController.swift */; };
+		3FBE33E828FED8910085BF21 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33E728FED8910085BF21 /* UIViewController+Ext.swift */; };
+		3FBE33EA28FF49280085BF21 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33E928FF49280085BF21 /* PersistenceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,12 @@
 		3FBE33D828FB43060085BF21 /* CPLogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPLogoImageView.swift; sourceTree = "<group>"; };
 		3FBE33DA28FB442B0085BF21 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3FBE33DC28FB48030085BF21 /* CPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPError.swift; sourceTree = "<group>"; };
+		3FBE33DE28FD931E0085BF21 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		3FBE33E028FD9E420085BF21 /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
+		3FBE33E228FDFB4F0085BF21 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
+		3FBE33E528FECF510085BF21 /* CPAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPAlertViewController.swift; sourceTree = "<group>"; };
+		3FBE33E728FED8910085BF21 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		3FBE33E928FF49280085BF21 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				3FBE33D028FB36060085BF21 /* ListModel.swift */,
+				3FBE33E228FDFB4F0085BF21 /* CoinModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				3FBE33DA28FB442B0085BF21 /* NetworkManager.swift */,
+				3FBE33E928FF49280085BF21 /* PersistenceManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -126,6 +140,7 @@
 		3FBE33BF28FB07F10085BF21 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3FBE33E428FECF370085BF21 /* Controllers */,
 				3FBE33D328FB3AFF0085BF21 /* Labels */,
 				3FBE33D228FB3AF20085BF21 /* ImageViews */,
 				3FBE33CB28FB2C7D0085BF21 /* Cells */,
@@ -145,6 +160,9 @@
 			isa = PBXGroup;
 			children = (
 				3FBE33CE28FB2E3C0085BF21 /* UIView+Ext.swift */,
+				3FBE33DE28FD931E0085BF21 /* String+Ext.swift */,
+				3FBE33E028FD9E420085BF21 /* Double+Ext.swift */,
+				3FBE33E728FED8910085BF21 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -180,6 +198,14 @@
 				3FBE33D628FB3C780085BF21 /* CPSecondaryInfoLabel.swift */,
 			);
 			path = Labels;
+			sourceTree = "<group>";
+		};
+		3FBE33E428FECF370085BF21 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3FBE33E528FECF510085BF21 /* CPAlertViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,12 +277,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBE33E828FED8910085BF21 /* UIViewController+Ext.swift in Sources */,
+				3FBE33E628FECF510085BF21 /* CPAlertViewController.swift in Sources */,
 				3FBE33D128FB36060085BF21 /* ListModel.swift in Sources */,
+				3FBE33E328FDFB4F0085BF21 /* CoinModel.swift in Sources */,
 				3FBE33CF28FB2E3C0085BF21 /* UIView+Ext.swift in Sources */,
+				3FBE33E128FD9E420085BF21 /* Double+Ext.swift in Sources */,
 				3FBE33D928FB43060085BF21 /* CPLogoImageView.swift in Sources */,
+				3FBE33DF28FD931E0085BF21 /* String+Ext.swift in Sources */,
 				3FBE33DB28FB442B0085BF21 /* NetworkManager.swift in Sources */,
 				3FBE33D528FB3B500085BF21 /* CPNameLabel.swift in Sources */,
 				3FBE33CA28FB143E0085BF21 /* SearchViewController.swift in Sources */,
+				3FBE33EA28FF49280085BF21 /* PersistenceManager.swift in Sources */,
 				3FBE33CD28FB2CA30085BF21 /* ListCollectionViewCell.swift in Sources */,
 				3FBE33C828FB115B0085BF21 /* ListViewModel.swift in Sources */,
 				3FBE33A828FB07450085BF21 /* AppDelegate.swift in Sources */,

@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ListModel: Codable {
+struct ListModel: Codable, Hashable {
     let id: String
     let symbol: String
     let name: String

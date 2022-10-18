@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let listVC = ListViewController(viewModel: ListViewModel())
         listVC.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 0)
         listVC.title = "Currencies by Volume"
-        
+
         return UINavigationController(rootViewController: listVC)
     }
     
@@ -52,8 +52,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func createTabBar() -> UITabBarController {
         let tabBar = UITabBarController()
         UITabBar.appearance().tintColor = .orange
-        tabBar.viewControllers = [createListNavigationController(), createFavoritesNavigationController(), createSearchNavigationController()]
-        
+        let navigationControllersArray = [createListNavigationController(), createFavoritesNavigationController(), createSearchNavigationController()]
+        for navi in navigationControllersArray {
+            navi.navigationBar.tintColor = .orange
+        }
+        tabBar.viewControllers = navigationControllersArray
         return tabBar
     }
     

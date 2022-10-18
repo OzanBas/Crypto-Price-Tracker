@@ -11,8 +11,10 @@ import Foundation
 enum CPError: String, Error {
     
     case badEndpoint  = "Can not convert to a URL."
-    case badResponse   = "Bad server response."
-    case parsingError = "Can not parse JSON response."
-    case dataError = "Invalid Data."
+    case badResponse   = "Unexpected server response. Please try again later."
+    case parsingError = "Can not parse JSON. Server response might be changed or something is broken."
+    case dataError = "Invalid Data. Immediately throw your phone out of the closest window."
     
+    case savingError = "Cannot add this coin to your favorites list. Please try again later."
+    case retrievingFavorites = "Cannot get your favorite coins. Maybe you never liked them at all!"
 }

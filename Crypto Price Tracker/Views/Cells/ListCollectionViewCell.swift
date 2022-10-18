@@ -9,17 +9,22 @@ import UIKit
 
 class ListCollectionViewCell: UICollectionViewCell {
     
+    
+    let service = NetworkManager()
     static let reuseId = "ListCollectionViewCell"
     
+    private var cellContainerView = UIView()
     private var coinLogoImageView = CPLogoImageView(frame: .zero)
     private var coinNameLabel = CPNameLabel()
     private var priceLabel = CPSecondaryInfoLabel()
     private var priceChangePercentage = CPSecondaryInfoLabel()
+    private var priceChangeImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        configureCellElements()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -27,39 +32,76 @@ class ListCollectionViewCell: UICollectionViewCell {
     
     
     func set(coin: ListModel) {
-        self.coinNameLabel.text = coin.name
-        self.priceLabel.convertAndSetFromDouble(from: coin.currentPrice)
-        self.priceChangePercentage.convertAndSetFromDouble(from: coin.priceChangePercentage24H)
+        coinNameLabel.text = coin.name
+        priceLabel.text = coin.currentPrice.formatToDisplayablePriceText()
+        priceChangePercentage.text = coin.priceChangePercentage24H.formatToDisplayablePriceChangeText()
+        configurePriceChangeImage(for: coin)
+        service.getCoinImage(for: coin.image) { image in
+            DispatchQueue.main.async {
+                self.coinLogoImageView.image = image
+            }
+        }
     }
     
     
-    func configure() {
-        addSubviewsAndSetTamicToFalse(views: coinLogoImageView, coinNameLabel, priceLabel, priceChangePercentage)
-
+    func configurePriceChangeImage(for coin: ListModel) {
+        guard coin.priceChangePercentage24H > 0 else {
+            priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
+            priceChangeImageView.tintColor = .systemRed
+            return
+        }
+        priceChangeImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
+        priceChangeImageView.tintColor = .systemGreen
+        return
+    }
+    
+    
+    func configureCellElements() {
+        addSubviewsAndSetTamicToFalse(views: cellContainerView,
+                                             coinLogoImageView,
+                                             coinNameLabel,
+                                             priceLabel,
+                                             priceChangePercentage,
+                                             priceChangeImageView)
+        
+        cellContainerView.layer.cornerRadius = 10
+        cellContainerView.backgroundColor = .systemGray6
+        
         
         let padding: CGFloat = 3
         NSLayoutConstraint.activate([
-            coinLogoImageView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            coinLogoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            coinLogoImageView.heightAnchor.constraint(equalToConstant: 40),
-            coinLogoImageView.widthAnchor.constraint(equalToConstant: 40),
+            
+            cellContainerView.topAnchor.constraint(equalTo: topAnchor),
+            cellContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            cellContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            cellContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            coinLogoImageView.topAnchor.constraint(equalTo: cellContainerView.topAnchor, constant: padding),
+            coinLogoImageView.leadingAnchor.constraint(equalTo: cellContainerView.leadingAnchor, constant: padding),
+            coinLogoImageView.heightAnchor.constraint(equalToConstant: 65),
+            coinLogoImageView.widthAnchor.constraint(equalToConstant: 65),
             
             coinNameLabel.topAnchor.constraint(equalTo: coinLogoImageView.bottomAnchor, constant: padding),
-            coinNameLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.leadingAnchor, constant: padding),
-            coinNameLabel.trailingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: -padding),
-            coinNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
+            coinNameLabel.leadingAnchor.constraint(equalTo: cellContainerView.leadingAnchor, constant: padding),
+            coinNameLabel.trailingAnchor.constraint(equalTo: cellContainerView.trailingAnchor, constant: -padding),
+            coinNameLabel.bottomAnchor.constraint(equalTo: cellContainerView.bottomAnchor, constant: -padding),
             
-            priceLabel.centerYAnchor.constraint(equalTo: coinLogoImageView.centerYAnchor, constant: 20),
-            priceLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: padding),
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            priceLabel.centerYAnchor.constraint(equalTo: coinLogoImageView.centerYAnchor, constant: -15),
+            priceLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: padding * 4),
+            priceLabel.trailingAnchor.constraint(equalTo: cellContainerView.trailingAnchor, constant: -padding),
             priceLabel.heightAnchor.constraint(equalToConstant: 24),
             
-            priceChangePercentage.centerYAnchor.constraint(equalTo: coinLogoImageView.centerYAnchor, constant: -20),
-            priceChangePercentage.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: padding),
-            priceChangePercentage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            priceChangeImageView.centerYAnchor.constraint(equalTo: coinLogoImageView.centerYAnchor, constant: 15),
+            priceChangeImageView.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor, constant: -3),
+            priceChangeImageView.heightAnchor.constraint(equalToConstant: 15),
+            priceChangeImageView.widthAnchor.constraint(equalToConstant: 15),
+            
+            priceChangePercentage.centerYAnchor.constraint(equalTo: coinLogoImageView.centerYAnchor, constant: 15),
+            priceChangePercentage.leadingAnchor.constraint(equalTo: priceChangeImageView.trailingAnchor, constant: padding),
+            priceChangePercentage.trailingAnchor.constraint(equalTo: cellContainerView.trailingAnchor, constant: -padding),
             priceChangePercentage.heightAnchor.constraint(equalToConstant: 24),
         ])
-        
     }
+    
     
 }
