@@ -21,6 +21,7 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         viewModel.getCoinsList(present: self)
+        collectionView.delegate = self
     }
 
     
@@ -51,7 +52,7 @@ class ListViewController: UIViewController {
     }
 }
 
-
+//MARK: - Ext+SearchController
 extension ListViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         let coins = viewModel.coins
@@ -60,5 +61,14 @@ extension ListViewController: UISearchResultsUpdating, UISearchControllerDelegat
             return }
         let filteredCoins = coins.filter { $0.name.lowercased().contains(filter.lowercased()) }
         viewModel.updateData(with: filteredCoins)
+    }
+}
+
+//MARK: - Ext+CollectionView
+extension ListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = DetailCoinViewController()
+        detailVC.title =  viewModel.coins[indexPath.row].name
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

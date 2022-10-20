@@ -73,9 +73,7 @@ class ListViewModel {
     func configureDataSource(collectionView: UICollectionView) {
         dataSource = UICollectionViewDiffableDataSource<Section, ListModel>(collectionView: collectionView , cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reuseId, for: indexPath) as! ListCollectionViewCell
-            DispatchQueue.main.async {
                 cell.set(coin: self.coins[indexPath.item])
-            }
             return cell
         })
     }
