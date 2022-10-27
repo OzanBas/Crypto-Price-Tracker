@@ -31,6 +31,7 @@
 		3FBE33EC28FFE91A0085BF21 /* DetailCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33EB28FFE91A0085BF21 /* DetailCoinViewController.swift */; };
 		3FBE33EE28FFE9990085BF21 /* DetailCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */; };
 		3FBE33F0290008BB0085BF21 /* CPExplanatoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33EF290008BB0085BF21 /* CPExplanatoryLabel.swift */; };
+		3FBE33F22902A2460085BF21 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		3FBE33EB28FFE91A0085BF21 /* DetailCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewController.swift; sourceTree = "<group>"; };
 		3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewModel.swift; sourceTree = "<group>"; };
 		3FBE33EF290008BB0085BF21 /* CPExplanatoryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPExplanatoryLabel.swift; sourceTree = "<group>"; };
+		3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				3FBE33DE28FD931E0085BF21 /* String+Ext.swift */,
 				3FBE33E028FD9E420085BF21 /* Double+Ext.swift */,
 				3FBE33E728FED8910085BF21 /* UIViewController+Ext.swift */,
+				3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBE33F22902A2460085BF21 /* UIImageView+Ext.swift in Sources */,
 				3FBE33E828FED8910085BF21 /* UIViewController+Ext.swift in Sources */,
 				3FBE33E628FECF510085BF21 /* CPAlertViewController.swift in Sources */,
 				3FBE33D128FB36060085BF21 /* ListModel.swift in Sources */,

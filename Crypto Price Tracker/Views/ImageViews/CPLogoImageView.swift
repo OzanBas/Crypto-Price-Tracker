@@ -8,7 +8,6 @@
 import UIKit
 
 class CPLogoImageView: UIImageView {
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -27,6 +26,4 @@ class CPLogoImageView: UIImageView {
         image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
         
     }
-    
-    
 }
