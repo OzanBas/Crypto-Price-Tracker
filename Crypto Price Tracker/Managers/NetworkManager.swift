@@ -25,15 +25,19 @@ class NetworkManager {
         guard let url = URL(string: endpoint) else {
             throw CPError.badEndpoint
         }
-                
-        let (data, response) = try await URLSession.shared.data(from: url)
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw CPError.badResponse
-        }
+        
         do {
-            return try decoder.decode([ListModel].self, from: data)
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw CPError.badResponse
+            }
+            do {
+                return try decoder.decode([ListModel].self, from: data)
+            } catch {
+                throw CPError.parsingError
+            }
         } catch {
-            throw CPError.parsingError
+            throw CPError.NoInternetConnection
         }
     }
     

@@ -10,6 +10,7 @@ import Foundation
 
 enum CPError: String, Error {
     
+    case NoInternetConnection = "Can not send request. Check your internet connection."
     case badEndpoint  = "Can not convert to a URL."
     case badResponse   = "Unexpected server response. Please try again later."
     case parsingError = "Can not parse JSON. Server response might be changed or something is broken."

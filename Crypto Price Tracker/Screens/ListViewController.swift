@@ -52,13 +52,14 @@ class ListViewController: UIViewController {
     
     
     func requestFirstTimeNetworkCall() {
+        
         viewModel.getCoinsList { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case.success(let coins):
+            case .success(let coins):
                 self.updateData(with: coins)
             case .failure(let error):
-                self.presentCPAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonText: "Ok")
+                self.presentCPAlertOnMainThread(title: "No Internet Connection", message: error.rawValue, buttonText: "Ok")
             }
         }
     }
