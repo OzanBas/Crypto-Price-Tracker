@@ -16,7 +16,7 @@ class NetworkManager {
     private let decoder = JSONDecoder()
     private let cache = NSCache<NSString, UIImage>()
     
-  
+    
     func getCoinsList() async throws -> [ListModel] {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
@@ -39,6 +39,42 @@ class NetworkManager {
         } catch {
             throw CPError.NoInternetConnection
         }
+    }
+    
+    
+    func getCoinDetail(coinName: String, completion: @escaping (Result<CoinModel, CPError>) -> Void) {
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+
+        
+        let endpoint = baseURL + "/coins/" + coinName
+        let url = URL(string: endpoint)
+        
+        guard let url = url else { return }
+        print(url)
+
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                completion(.failure(.badEndpoint))
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(.failure(.badResponse))
+                return
+            }
+            guard let data = data else {
+                completion(.failure(.dataError))
+                return
+            }
+            do {
+                let coin = try self.decoder.decode(CoinModel.self, from: data)
+                completion(.success(coin))
+            } catch {
+                completion(.failure(.parsingError))
+                print(error)
+            }
+        }
+        dataTask.resume()
     }
     
     

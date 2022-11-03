@@ -9,6 +9,7 @@ import Foundation
 
 extension Double {
     
+    
     func formatToDisplayablePriceChangeText() -> String {
         
         let newDouble =  self / 100
@@ -28,8 +29,23 @@ extension Double {
         formatter.minimumFractionDigits = 2
         formatter.currencyCode = "USD"
         formatter.numberStyle = .currency
+        formatter.groupingSeparator = "."
         
         let enhancedPriceString = formatter.string(from: self as NSNumber) ?? "null"
         return enhancedPriceString
     }
+    
+    
+    func formatToThousandSeparatedText() -> String {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 8
+        formatter.minimumFractionDigits = 0
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        
+        let enhancedPriceString = formatter.string(from: self as NSNumber) ?? "null"
+        return enhancedPriceString
+        
+    }
+    
 }

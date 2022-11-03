@@ -8,36 +8,22 @@
 import UIKit
 
 class DetailCoinViewController: UIViewController {
-
-//MARK: - Properties
+    
+    //MARK: - Properties
     var viewModel: DetailCoinViewModel!
+    var topCardView: CPCoinCardView!
+    var detailCardView: CPDetailScrollView!
     
-    var coinLogoImageView = CPLogoImageView(frame: .zero)
-    var priceChangeImageView = UIImageView()
-    var coinPriceLabel = CPExplanatoryLabel()
-    var coinTitleLabel = CPNameLabel()
-    var coinPriceChangeLabel = CPNameLabel()
-    var favoriteButton = UIButton()
-    
-    private var staticDetailsLabel = CPNameLabel()
-    private var staticDescriptionLabel = CPNameLabel()
-    var descriptionLabel = CPSecondaryInfoLabel()
 
-    private var padding: CGFloat = 10
-    private var paddingXS: CGFloat = 5
-    private var paddingXL: CGFloat = 20
     
-    
-//MARK: - Lifecycle
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        configureTopSide()
-        viewModel.setVCElements(for: self)
-        
+        configureViewController()
+        requestCoinDetails()
     }
-
-
+    
+    
     init(viewModel: DetailCoinViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -48,39 +34,69 @@ class DetailCoinViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func requestCoinDetails() {
+        viewModel.getCoinDetails { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let coin):
+                self.viewModel.coinDetail = coin
+                DispatchQueue.main.async {
+                    self.configureTopCard()
+                    self.configureDetailsCard()
+                }
+            case .failure(let error):
+                self.presentCPAlertOnMainThread(title: "Can't display info", message: error.rawValue, buttonText: "Ok")
+            }
+        }
+    }
     
-//MARK: - Configuration
-    func configureTopSide() {
-        
-        let stackView = UIStackView(arrangedSubviews: [coinPriceLabel, priceChangeImageView, coinPriceChangeLabel])
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        
-        view.addSubviewsAndSetTamicToFalse(views: coinLogoImageView, favoriteButton, coinTitleLabel, stackView)
-        
+    //MARK: - Configuration
+    
+    func configureViewController() {
+        view.backgroundColor = .systemBackground
+    }
+    
+    
+    
+    
+    
+    func configureTopCard() {
+        topCardView = CPCoinCardView()
+        topCardView.setElements(coin: viewModel.coin)
+        view.addSubviewsAndSetTamicToFalse(views: topCardView)
         
         NSLayoutConstraint.activate([
-            coinLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            coinLogoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            coinLogoImageView.heightAnchor.constraint(equalToConstant: 100),
-            coinLogoImageView.widthAnchor.constraint(equalToConstant: 100),
-            
-            favoriteButton.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor),
-            favoriteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 45),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 45),
-            
-            coinTitleLabel.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor),
-            coinTitleLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: paddingXS),
-            coinTitleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: paddingXS),
-            coinTitleLabel.heightAnchor.constraint(equalToConstant: 35),
-            
-            stackView.bottomAnchor.constraint(equalTo: coinLogoImageView.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: paddingXS),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding),
-            stackView.heightAnchor.constraint(equalToConstant: 35)
+            topCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            topCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            topCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            topCardView.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
+    
+    
+    func configureDetailsCard() {
+        detailCardView = CPDetailScrollView(coinDetails: viewModel.coinDetail)
+        detailCardView.scrollViewButtonDelegate = self
+        view.addSubviewsAndSetTamicToFalse(views: detailCardView)
+        detailCardView.setElements(coin: viewModel.coin, coinDetails: viewModel.coinDetail)
+        
+        NSLayoutConstraint.activate([
+            detailCardView.topAnchor.constraint(equalTo: topCardView.bottomAnchor, constant: 20),
+            detailCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            detailCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            detailCardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+}
 
+extension DetailCoinViewController: DetailScrollViewButtonProtocol {
+    func didTapLinkButton(urlString: String) {
+        guard let url = URL(string: urlString) else {
+            self.presentCPAlertOnMainThread(title: "Link Error", message: "Cannot move to url.", buttonText: "Ok")
+            return
+        }
+        self.displayOnSafariVC(with: url)
+    }
+    
     
 }

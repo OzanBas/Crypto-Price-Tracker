@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F261DBB2913D8B20058844B /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBA2913D8B20058844B /* Int+Ext.swift */; };
 		3FBE33A828FB07450085BF21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A728FB07450085BF21 /* AppDelegate.swift */; };
 		3FBE33AA28FB07450085BF21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A928FB07450085BF21 /* SceneDelegate.swift */; };
 		3FBE33B128FB07460085BF21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FBE33B028FB07460085BF21 /* Assets.xcassets */; };
@@ -32,9 +33,13 @@
 		3FBE33EE28FFE9990085BF21 /* DetailCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */; };
 		3FBE33F0290008BB0085BF21 /* CPExplanatoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33EF290008BB0085BF21 /* CPExplanatoryLabel.swift */; };
 		3FBE33F22902A2460085BF21 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */; };
+		3FCD063A290FBDAB00298662 /* CPFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */; };
+		3FCD063D2912765700298662 /* CPDetailScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063C2912765700298662 /* CPDetailScrollView.swift */; };
+		3FCD06402912A1DF00298662 /* CPCoinCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F261DBA2913D8B20058844B /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		3FBE33A428FB07450085BF21 /* Crypto Price Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto Price Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBE33A728FB07450085BF21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FBE33A928FB07450085BF21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +67,9 @@
 		3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewModel.swift; sourceTree = "<group>"; };
 		3FBE33EF290008BB0085BF21 /* CPExplanatoryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPExplanatoryLabel.swift; sourceTree = "<group>"; };
 		3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPFavoriteButton.swift; sourceTree = "<group>"; };
+		3FCD063C2912765700298662 /* CPDetailScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPDetailScrollView.swift; sourceTree = "<group>"; };
+		3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPCoinCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,10 +157,13 @@
 		3FBE33BF28FB07F10085BF21 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3FBE33CB28FB2C7D0085BF21 /* Cells */,
 				3FBE33E428FECF370085BF21 /* Controllers */,
+				3FCD0638290FBD6A00298662 /* CPButton */,
 				3FBE33D328FB3AFF0085BF21 /* Labels */,
 				3FBE33D228FB3AF20085BF21 /* ImageViews */,
-				3FBE33CB28FB2C7D0085BF21 /* Cells */,
+				3FCD063B2912763D00298662 /* ScrollViews */,
+				3FCD063E2912A19600298662 /* UIViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +185,7 @@
 				3FBE33E028FD9E420085BF21 /* Double+Ext.swift */,
 				3FBE33E728FED8910085BF21 /* UIViewController+Ext.swift */,
 				3FBE33F12902A2460085BF21 /* UIImageView+Ext.swift */,
+				3F261DBA2913D8B20058844B /* Int+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -218,6 +230,30 @@
 				3FBE33E528FECF510085BF21 /* CPAlertViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3FCD0638290FBD6A00298662 /* CPButton */ = {
+			isa = PBXGroup;
+			children = (
+				3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */,
+			);
+			path = CPButton;
+			sourceTree = "<group>";
+		};
+		3FCD063B2912763D00298662 /* ScrollViews */ = {
+			isa = PBXGroup;
+			children = (
+				3FCD063C2912765700298662 /* CPDetailScrollView.swift */,
+			);
+			path = ScrollViews;
+			sourceTree = "<group>";
+		};
+		3FCD063E2912A19600298662 /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */,
+			);
+			path = UIViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,12 +325,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FCD06402912A1DF00298662 /* CPCoinCardView.swift in Sources */,
 				3FBE33F22902A2460085BF21 /* UIImageView+Ext.swift in Sources */,
 				3FBE33E828FED8910085BF21 /* UIViewController+Ext.swift in Sources */,
 				3FBE33E628FECF510085BF21 /* CPAlertViewController.swift in Sources */,
 				3FBE33D128FB36060085BF21 /* ListModel.swift in Sources */,
 				3FBE33E328FDFB4F0085BF21 /* CoinModel.swift in Sources */,
 				3FBE33CF28FB2E3C0085BF21 /* UIView+Ext.swift in Sources */,
+				3F261DBB2913D8B20058844B /* Int+Ext.swift in Sources */,
 				3FBE33E128FD9E420085BF21 /* Double+Ext.swift in Sources */,
 				3FBE33D928FB43060085BF21 /* CPLogoImageView.swift in Sources */,
 				3FBE33DF28FD931E0085BF21 /* String+Ext.swift in Sources */,
@@ -306,6 +344,7 @@
 				3FBE33CD28FB2CA30085BF21 /* ListCollectionViewCell.swift in Sources */,
 				3FBE33C828FB115B0085BF21 /* ListViewModel.swift in Sources */,
 				3FBE33A828FB07450085BF21 /* AppDelegate.swift in Sources */,
+				3FCD063D2912765700298662 /* CPDetailScrollView.swift in Sources */,
 				3FBE33DD28FB48030085BF21 /* CPError.swift in Sources */,
 				3FBE33AA28FB07450085BF21 /* SceneDelegate.swift in Sources */,
 				3FBE33C628FB0A170085BF21 /* FavoritesViewController.swift in Sources */,
@@ -313,6 +352,7 @@
 				3FBE33EC28FFE91A0085BF21 /* DetailCoinViewController.swift in Sources */,
 				3FBE33C428FB09E60085BF21 /* ListViewController.swift in Sources */,
 				3FBE33D728FB3C780085BF21 /* CPSecondaryInfoLabel.swift in Sources */,
+				3FCD063A290FBDAB00298662 /* CPFavoriteButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
