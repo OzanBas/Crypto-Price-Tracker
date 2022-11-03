@@ -81,6 +81,7 @@ class CPCoinCardView: UIView {
         
         coinTitleLabel.font = .systemFont(ofSize: 22, weight: .bold)
         coinTitleLabel.textAlignment = .left
+        coinTitleLabel.adjustsFontSizeToFitWidth = true
         
         addSubviewsAndSetTamicToFalse(views: coinLogoImageView, favoriteButton, coinTitleLabel, stackView)
         
@@ -92,11 +93,11 @@ class CPCoinCardView: UIView {
             
             coinTitleLabel.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor, constant: paddingXS),
             coinTitleLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: paddingXL),
-            coinTitleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: paddingXS),
+            coinTitleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -padding),
             coinTitleLabel.heightAnchor.constraint(equalToConstant: 35),
             
             favoriteButton.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor),
-            favoriteButton.centerXAnchor.constraint(equalTo: priceChangeStackView.centerXAnchor),
+            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -paddingXL),
             favoriteButton.heightAnchor.constraint(equalToConstant: 45),
             favoriteButton.widthAnchor.constraint(equalToConstant: 45),
             

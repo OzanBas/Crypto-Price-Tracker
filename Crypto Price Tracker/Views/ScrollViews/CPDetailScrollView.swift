@@ -155,6 +155,9 @@ final class CPDetailScrollView: UIScrollView {
         linkButton.addTarget(self, action: #selector(goToLink), for: .touchUpInside)
         linkButton.setTitleColor(.blue, for: .normal)
         linkButton.setTitleColor(.purple, for: .highlighted)
+        linkButton.titleLabel?.font = .systemFont(ofSize: 12)
+        linkButton.contentHorizontalAlignment = .left
+
         
         descriptionLabel.numberOfLines = 0
         cardView.addSubviewsAndSetTamicToFalse(views: marketCapRankLabel, volumeLabel, circulationLabel, totalCapLabel, athLabel, linkButton, descriptionTitleLabel, descriptionLabel)
@@ -188,7 +191,7 @@ final class CPDetailScrollView: UIScrollView {
             totalCapLabel.heightAnchor.constraint(equalToConstant: 22),
             
             linkButton.centerYAnchor.constraint(equalTo: homePageLinkTitleLabel.centerYAnchor),
-            linkButton.leadingAnchor.constraint(equalTo: homePageLinkTitleLabel.trailingAnchor),
+            linkButton.leadingAnchor.constraint(equalTo: homePageLinkTitleLabel.trailingAnchor, constant: padding),
             linkButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -paddingXL),
             linkButton.heightAnchor.constraint(equalToConstant: 22),
             

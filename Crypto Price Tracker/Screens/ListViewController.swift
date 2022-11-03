@@ -137,8 +137,15 @@ extension ListViewController: UISearchResultsUpdating, UISearchControllerDelegat
 //MARK: - Ext+CollectionView
 extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailViewModel = DetailCoinViewModel(coin: viewModel.coins[indexPath.row])
         
+        guard viewModel.filteredCoins.count == 0 else {
+            let detailViewModel = DetailCoinViewModel(coin: viewModel.filteredCoins[indexPath.row])
+            let detailVC = DetailCoinViewController(viewModel: detailViewModel)
+            detailVC.title =  viewModel.filteredCoins[indexPath.row].name
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            return
+        }
+        let detailViewModel = DetailCoinViewModel(coin: viewModel.coins[indexPath.row])
         let detailVC = DetailCoinViewController(viewModel: detailViewModel)
         detailVC.title =  viewModel.coins[indexPath.row].name
         self.navigationController?.pushViewController(detailVC, animated: true)
