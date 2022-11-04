@@ -8,7 +8,6 @@
 import UIKit
 
 class CPCoinCardView: UIView {
-    var coin: ListModel?
     var coinDetails: CoinModel?
     private let service = NetworkManager()
     
@@ -30,9 +29,8 @@ class CPCoinCardView: UIView {
     }
     
     
-    convenience init(coin: ListModel, coinDetails: CoinModel) {
+    convenience init(coinDetails: CoinModel) {
         self.init(frame: .zero)
-        self.coin = coin
         self.coinDetails = coinDetails
     }
     
@@ -42,22 +40,23 @@ class CPCoinCardView: UIView {
     }
     
     
-    func setElements(coin: ListModel) {
-        configurePriceChangeImage(for: coin)
+    func setElements(coinDetails: CoinModel) {
+        configurePriceChangeImage(for: coinDetails)
         
-        self.coinPriceLabel.text = coin.currentPrice.formatToDisplayablePriceText()
-        self.coinTitleLabel.text = coin.name
-        self.coinPriceChangeLabel.text = coin.priceChangePercentage24H.formatToDisplayablePriceChangeText()
-        service.getCoinImage(for: coin.image) { image in
+        self.coinPriceLabel.text = coinDetails.marketData.currentPrice?["usd"]?.formatToDisplayablePriceText()
+        self.coinTitleLabel.text = coinDetails.name
+        self.coinPriceChangeLabel.text = coinDetails.marketData.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
+        let coinImageUrl = coinDetails.image.large
+        service.getCoinImage(for: coinImageUrl) { image in
             DispatchQueue.main.async {
                 self.coinLogoImageView.image = image
             }
         }
     }
+     
     
-    
-    private func configurePriceChangeImage(for coin: ListModel) {
-        guard coin.priceChangePercentage24H > 0 else {
+    private func configurePriceChangeImage(for coinDetails: CoinModel) {
+        guard coinDetails.marketData.priceChangePercentage24H ?? 1 > 0 else {
             priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
             priceChangeImageView.tintColor = .systemRed
             return

@@ -42,12 +42,12 @@ class NetworkManager {
     }
     
     
-    func getCoinDetail(coinName: String, completion: @escaping (Result<CoinModel, CPError>) -> Void) {
+    func getCoinDetail(coinId: String, completion: @escaping (Result<CoinModel, CPError>) -> Void) {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
 
         
-        let endpoint = baseURL + "/coins/" + coinName
+        let endpoint = baseURL + "/coins/" + coinId
         let url = URL(string: endpoint)
         
         guard let url = url else { return }

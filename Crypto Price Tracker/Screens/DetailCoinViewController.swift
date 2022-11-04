@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailCoinViewController: UIViewController {
+class DetailCoinViewController: CPDataRequesterVC {
     
     //MARK: - Properties
     var viewModel: DetailCoinViewModel!
@@ -35,7 +35,9 @@ class DetailCoinViewController: UIViewController {
     }
     
     func requestCoinDetails() {
+        showActivityIndicator()
         viewModel.getCoinDetails { [weak self] result in
+            self?.dismissActivityIndicator()
             guard let self = self else { return }
             switch result {
             case .success(let coin):
@@ -62,7 +64,7 @@ class DetailCoinViewController: UIViewController {
     
     func configureTopCard() {
         topCardView = CPCoinCardView()
-        topCardView.setElements(coin: viewModel.coin)
+        topCardView.setElements(coinDetails: viewModel.coinDetail)
         view.addSubviewsAndSetTamicToFalse(views: topCardView)
         
         NSLayoutConstraint.activate([
@@ -78,7 +80,7 @@ class DetailCoinViewController: UIViewController {
         detailCardView = CPDetailScrollView(coinDetails: viewModel.coinDetail)
         detailCardView.scrollViewButtonDelegate = self
         view.addSubviewsAndSetTamicToFalse(views: detailCardView)
-        detailCardView.setElements(coin: viewModel.coin, coinDetails: viewModel.coinDetail)
+        detailCardView.setElements(coinDetails: viewModel.coinDetail)
         
         NSLayoutConstraint.activate([
             detailCardView.topAnchor.constraint(equalTo: topCardView.bottomAnchor, constant: 20),

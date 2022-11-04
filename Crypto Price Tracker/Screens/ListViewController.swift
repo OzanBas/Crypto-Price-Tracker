@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+class ListViewController: CPDataRequesterVC {
 
 //MARK: - Properties
     var viewModel: ListViewModel!
@@ -52,9 +52,10 @@ class ListViewController: UIViewController {
     
     
     func requestFirstTimeNetworkCall() {
-        
+        showActivityIndicator()
         viewModel.getCoinsList { [weak self] result in
             guard let self = self else { return }
+            self.dismissActivityIndicator()
             switch result {
             case .success(let coins):
                 self.updateData(with: coins)
@@ -139,13 +140,15 @@ extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard viewModel.filteredCoins.count == 0 else {
-            let detailViewModel = DetailCoinViewModel(coin: viewModel.filteredCoins[indexPath.row])
+            let coinId = viewModel.filteredCoins[indexPath.row].id.lowercased()
+            let detailViewModel = DetailCoinViewModel(coinId: coinId)
             let detailVC = DetailCoinViewController(viewModel: detailViewModel)
             detailVC.title =  viewModel.filteredCoins[indexPath.row].name
             self.navigationController?.pushViewController(detailVC, animated: true)
             return
         }
-        let detailViewModel = DetailCoinViewModel(coin: viewModel.coins[indexPath.row])
+        let coinId = viewModel.coins[indexPath.row].id.lowercased()
+        let detailViewModel = DetailCoinViewModel(coinId: coinId)
         let detailVC = DetailCoinViewController(viewModel: detailViewModel)
         detailVC.title =  viewModel.coins[indexPath.row].name
         self.navigationController?.pushViewController(detailVC, animated: true)
