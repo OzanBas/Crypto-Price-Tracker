@@ -51,7 +51,6 @@ class NetworkManager {
         let url = URL(string: endpoint)
         
         guard let url = url else { return }
-        print(url)
 
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
@@ -71,7 +70,6 @@ class NetworkManager {
                 completion(.success(coin))
             } catch {
                 completion(.failure(.parsingError))
-                print(error)
             }
         }
         dataTask.resume()

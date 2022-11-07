@@ -65,6 +65,7 @@ class ListViewController: CPDataRequesterVC {
         }
     }
     
+    
 //MARK: - Configuration
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -81,6 +82,7 @@ class ListViewController: CPDataRequesterVC {
         view.addSubview(collectionView)
         
     }
+    
     
     func twoColumnFlowLayout(for view: UIView) -> UICollectionViewFlowLayout {
         let width = view.bounds.width
@@ -105,6 +107,7 @@ class ListViewController: CPDataRequesterVC {
         navigationItem.searchController = searchController
         return searchController
     }
+    
     
     func configureDataSource(collectionView: UICollectionView) {
         dataSource = UICollectionViewDiffableDataSource<Section, ListModel>(collectionView: collectionView , cellProvider: { collectionView, indexPath, itemIdentifier in

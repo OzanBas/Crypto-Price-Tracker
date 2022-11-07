@@ -34,6 +34,7 @@ class DetailCoinViewController: CPDataRequesterVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     func requestCoinDetails() {
         showActivityIndicator()
         viewModel.getCoinDetails { [weak self] result in
@@ -52,26 +53,26 @@ class DetailCoinViewController: CPDataRequesterVC {
         }
     }
     
-    //MARK: - Configuration
     
+
+
+    
+    //MARK: - Configuration
     func configureViewController() {
         view.backgroundColor = .systemBackground
     }
     
     
-    
-    
-    
     func configureTopCard() {
-        topCardView = CPCoinCardView()
-        topCardView.setElements(coinDetails: viewModel.coinDetail)
+        topCardView = CPCoinCardView(coinDetails: viewModel.coinDetail)
+        topCardView.buttonDelegate = self
         view.addSubviewsAndSetTamicToFalse(views: topCardView)
         
         NSLayoutConstraint.activate([
             topCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             topCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             topCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            topCardView.heightAnchor.constraint(equalToConstant: 140)
+            topCardView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -83,7 +84,7 @@ class DetailCoinViewController: CPDataRequesterVC {
         detailCardView.setElements(coinDetails: viewModel.coinDetail)
         
         NSLayoutConstraint.activate([
-            detailCardView.topAnchor.constraint(equalTo: topCardView.bottomAnchor, constant: 20),
+            detailCardView.topAnchor.constraint(equalTo: topCardView.bottomAnchor, constant: 15),
             detailCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             detailCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             detailCardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -91,6 +92,7 @@ class DetailCoinViewController: CPDataRequesterVC {
     }
 }
 
+//MARK: - DetailScrollViewButtonProtocol
 extension DetailCoinViewController: DetailScrollViewButtonProtocol {
     func didTapLinkButton(urlString: String) {
         guard let url = URL(string: urlString) else {
@@ -99,6 +101,18 @@ extension DetailCoinViewController: DetailScrollViewButtonProtocol {
         }
         self.displayOnSafariVC(with: url)
     }
-    
-    
 }
+
+
+//MARK: - FavoriteButtonProtocol
+extension DetailCoinViewController: FavoriteButtonProtocol {
+    func didTapFavoriteButton(for coin: CoinModel) {
+        DispatchQueue.main.async { self.configureTopCard() }
+        
+        PersistenceManager.update(favorite: coin) { error in
+            guard let error = error else { return }
+            self.presentCPAlertOnMainThread(title: "Note:", message: error.rawValue, buttonText: "Ok")
+        }
+    }
+}
+

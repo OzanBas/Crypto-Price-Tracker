@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol FavoriteButtonProtocol {
+    func didTapFavoriteButton(for coin: CoinModel)
+}
+
+
 class CPCoinCardView: UIView {
+    var buttonDelegate: FavoriteButtonProtocol?
     var coinDetails: CoinModel?
     private let service = NetworkManager()
     
@@ -32,6 +38,7 @@ class CPCoinCardView: UIView {
     convenience init(coinDetails: CoinModel) {
         self.init(frame: .zero)
         self.coinDetails = coinDetails
+        setElements(coinDetails: coinDetails)
     }
     
     
@@ -42,6 +49,7 @@ class CPCoinCardView: UIView {
     
     func setElements(coinDetails: CoinModel) {
         configurePriceChangeImage(for: coinDetails)
+        configureStarImage()
         
         self.coinPriceLabel.text = coinDetails.marketData.currentPrice?["usd"]?.formatToDisplayablePriceText()
         self.coinTitleLabel.text = coinDetails.name
@@ -63,13 +71,30 @@ class CPCoinCardView: UIView {
         }
         priceChangeImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
         priceChangeImageView.tintColor = .systemGreen
-        return
     }
     
+    
+    private func configureStarImage() {
+        PersistenceManager.retrieveFavorites { result in
+            switch result {
+            case .success(let coins):
+                if coins.contains(where: { $0.name == self.coinDetails?.name }) {
+                    self.favoriteButton.configureFilledStar()
+                } else {
+                    self.favoriteButton.configureEmptyStar()
+                }
+            case .failure(_):
+                return
+            }
+        }
+        
+    }
     
     private func configure() {
         backgroundColor = .systemGray6
         layer.cornerRadius = 15
+        
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonAction), for: .touchUpInside)
         
         let priceChangeStackView = UIStackView(arrangedSubviews: [priceChangeImageView, coinPriceChangeLabel])
         let stackView = UIStackView(arrangedSubviews: [coinPriceLabel, priceChangeStackView])
@@ -85,20 +110,20 @@ class CPCoinCardView: UIView {
         addSubviewsAndSetTamicToFalse(views: coinLogoImageView, favoriteButton, coinTitleLabel, stackView)
         
         NSLayoutConstraint.activate([
-            coinLogoImageView.topAnchor.constraint(equalTo: topAnchor, constant: paddingXL),
-            coinLogoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: paddingXL),
-            coinLogoImageView.heightAnchor.constraint(equalToConstant: 100),
-            coinLogoImageView.widthAnchor.constraint(equalToConstant: 100),
+            coinLogoImageView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            coinLogoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            coinLogoImageView.heightAnchor.constraint(equalToConstant: 80),
+            coinLogoImageView.widthAnchor.constraint(equalToConstant: 80),
             
             coinTitleLabel.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor, constant: paddingXS),
             coinTitleLabel.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: paddingXL),
             coinTitleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -padding),
             coinTitleLabel.heightAnchor.constraint(equalToConstant: 35),
             
-            favoriteButton.topAnchor.constraint(equalTo: coinLogoImageView.topAnchor),
-            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -paddingXL),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 45),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 45),
+            favoriteButton.centerYAnchor.constraint(equalTo: coinTitleLabel.centerYAnchor),
+            favoriteButton.centerXAnchor.constraint(equalTo: priceChangeStackView.centerXAnchor),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 30),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
             
             stackView.bottomAnchor.constraint(equalTo: coinLogoImageView.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: coinLogoImageView.trailingAnchor, constant: paddingXL),
@@ -106,4 +131,11 @@ class CPCoinCardView: UIView {
             stackView.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
+    
+    @objc func favoriteButtonAction() {
+        if let coinDetails = coinDetails {
+            buttonDelegate?.didTapFavoriteButton(for: coinDetails)
+        }
+    }
+    
 }

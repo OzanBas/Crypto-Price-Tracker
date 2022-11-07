@@ -16,32 +16,63 @@ enum PersistenceManager {
         static let favorites = "favorites"
     }
     
+    static func update(favorite: CoinModel, completion: @escaping(CPError?) -> Void) {
+        retrieveFavorites { result in
+            switch result {
+            case .success(var favorites):
+                print(favorites.count)
+                    if favorites.contains(where: { $0.name == favorite.name })  {
+                        favorites.removeAll { $0.name == favorite.name }
+                        let error = saveToFavorites(coins: favorites)
+                        guard error == nil else {
+                            completion(.savingError)
+                            return
+                        }
+                        completion(.removingAlert)
+                        return
+                    } else {
+                        favorites.append(favorite)
+                        let error = saveToFavorites(coins: favorites)
+                        guard error == nil else {
+                            completion(.savingError)
+                            return
+                        }
+                        completion(.addingAlert)
+                    }
+            case .failure(let error):
+                completion(error)
+            }
+        }
+    }
     
-    static func saveToFavorites(coin: ListModel) -> CPError? {
-        let encoder = JSONEncoder()
+    
+    static func saveToFavorites(coins: [CoinModel]) -> CPError? {
         
         do {
-            let favorite = try encoder.encode(coin)
+            let encoder = JSONEncoder()
+            let favorite = try encoder.encode(coins)
             defaults.set(favorite, forKey: Keys.favorites)
             return nil
         } catch {
-            return CPError.savingError
+            return .savingError
         }
     }
     
     
-    static func retrieveFavorites(completion: @escaping (Result<[ListModel], CPError>) -> Void ) {
-        let decoder = JSONDecoder()
-        
+    static func retrieveFavorites(completion: @escaping (Result<[CoinModel], CPError>) -> Void) {
+        guard let retrievedData = defaults.object(forKey: Keys.favorites) as? Data else {
+            completion(.success([]))
+            return
+        }
         do {
-            guard let retrievedData = defaults.object(forKey: Keys.favorites) as? Data else {
-                completion(.success([]))
-                return
-            }
-            let favorites = try decoder.decode([ListModel].self, from: retrievedData)
+            let decoder = JSONDecoder()
+            let favorites = try decoder.decode([CoinModel].self, from: retrievedData)
             completion(.success(favorites))
         } catch {
-            completion(.failure(CPError.retrievingFavorites))
+            completion(.failure(.retrievingFavorites))
         }
     }
+    
+    
 }
+

@@ -17,6 +17,5 @@ extension UIImageView {
         }
         image = UIImage(systemName: "arrowtriangle.up.fill")
         tintColor = .systemGreen
-        return
     }
 }

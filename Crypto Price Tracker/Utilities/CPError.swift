@@ -14,8 +14,10 @@ enum CPError: String, Error {
     case badEndpoint  = "Can not convert to an URL."
     case badResponse   = "Unexpected server response. Please try again later."
     case parsingError = "Can not parse JSON. Server response might be changed or something is broken."
-    case dataError = "Invalid Data. Immediately throw your phone out of the closest window."
+    case dataError = "Invalid Data. Smash your phone with a hammer and try again."
     
-    case savingError = "Cannot add this coin to your favorites list. Please try again later."
-    case retrievingFavorites = "Cannot get your favorite coins. Maybe you never liked them at all!"
+    case savingError = "Can't add this coin to your favorites list. Please try again later."
+    case retrievingFavorites = "Can't get your favorite coins."
+    case removingAlert = "This coin will be removed from your favorites."
+    case addingAlert = "This coin will be added to your favorites."
 }

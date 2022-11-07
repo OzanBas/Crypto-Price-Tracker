@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F261DBB2913D8B20058844B /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBA2913D8B20058844B /* Int+Ext.swift */; };
 		3F261DBD2915002C0058844B /* CPDataRequesterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBC2915002C0058844B /* CPDataRequesterVC.swift */; };
+		3F261DBF2915376F0058844B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBE2915376F0058844B /* FavoriteCell.swift */; };
 		3FBE33A828FB07450085BF21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A728FB07450085BF21 /* AppDelegate.swift */; };
 		3FBE33AA28FB07450085BF21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A928FB07450085BF21 /* SceneDelegate.swift */; };
 		3FBE33B128FB07460085BF21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FBE33B028FB07460085BF21 /* Assets.xcassets */; };
@@ -37,11 +38,13 @@
 		3FCD063A290FBDAB00298662 /* CPFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */; };
 		3FCD063D2912765700298662 /* CPDetailScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063C2912765700298662 /* CPDetailScrollView.swift */; };
 		3FCD06402912A1DF00298662 /* CPCoinCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */; };
+		3FD7F9922918E1AA00F32E22 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD7F9912918E1AA00F32E22 /* FavoritesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3F261DBA2913D8B20058844B /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		3F261DBC2915002C0058844B /* CPDataRequesterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPDataRequesterVC.swift; sourceTree = "<group>"; };
+		3F261DBE2915376F0058844B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		3FBE33A428FB07450085BF21 /* Crypto Price Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto Price Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBE33A728FB07450085BF21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FBE33A928FB07450085BF21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPFavoriteButton.swift; sourceTree = "<group>"; };
 		3FCD063C2912765700298662 /* CPDetailScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPDetailScrollView.swift; sourceTree = "<group>"; };
 		3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPCoinCardView.swift; sourceTree = "<group>"; };
+		3FD7F9912918E1AA00F32E22 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +165,7 @@
 			children = (
 				3FBE33CB28FB2C7D0085BF21 /* Cells */,
 				3FBE33E428FECF370085BF21 /* Controllers */,
-				3FCD0638290FBD6A00298662 /* CPButton */,
+				3FCD0638290FBD6A00298662 /* Buttons */,
 				3FBE33D328FB3AFF0085BF21 /* Labels */,
 				3FBE33D228FB3AF20085BF21 /* ImageViews */,
 				3FCD063B2912763D00298662 /* ScrollViews */,
@@ -175,6 +179,7 @@
 			children = (
 				3FBE33C728FB115B0085BF21 /* ListViewModel.swift */,
 				3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */,
+				3FD7F9912918E1AA00F32E22 /* FavoritesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				3FBE33CC28FB2CA30085BF21 /* ListCollectionViewCell.swift */,
+				3F261DBE2915376F0058844B /* FavoriteCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -235,12 +241,12 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		3FCD0638290FBD6A00298662 /* CPButton */ = {
+		3FCD0638290FBD6A00298662 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				3FCD0639290FBDAB00298662 /* CPFavoriteButton.swift */,
 			);
-			path = CPButton;
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		3FCD063B2912763D00298662 /* ScrollViews */ = {
@@ -342,7 +348,9 @@
 				3FBE33EE28FFE9990085BF21 /* DetailCoinViewModel.swift in Sources */,
 				3FBE33DB28FB442B0085BF21 /* NetworkManager.swift in Sources */,
 				3FBE33D528FB3B500085BF21 /* CPNameLabel.swift in Sources */,
+				3F261DBF2915376F0058844B /* FavoriteCell.swift in Sources */,
 				3F261DBD2915002C0058844B /* CPDataRequesterVC.swift in Sources */,
+				3FD7F9922918E1AA00F32E22 /* FavoritesViewModel.swift in Sources */,
 				3FBE33CA28FB143E0085BF21 /* SearchViewController.swift in Sources */,
 				3FBE33EA28FF49280085BF21 /* PersistenceManager.swift in Sources */,
 				3FBE33CD28FB2CA30085BF21 /* ListCollectionViewCell.swift in Sources */,
@@ -413,7 +421,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -467,7 +475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -13,8 +13,8 @@ extension UIViewController {
     func presentCPAlertOnMainThread(title: String, message: String, buttonText: String) {
         DispatchQueue.main.async {
             let alertVC =  CPAlertViewController(title: title, message: message, buttonText: buttonText)
-            alertVC.modalPresentationStyle = .automatic
-            alertVC.modalTransitionStyle = .flipHorizontal
+            alertVC.modalPresentationStyle = .popover
+            alertVC.modalTransitionStyle = .crossDissolve
             self.present(alertVC, animated: true)
         }
     }

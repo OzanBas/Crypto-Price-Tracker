@@ -39,8 +39,10 @@ class CPAlertViewController: UIViewController {
 
     func configureContainerView() {
         view.addSubviewsAndSetTamicToFalse(views: containerView)
-        containerView.backgroundColor =  .secondarySystemFill
+        containerView.backgroundColor =  .systemGray5
+        containerView.layer.borderWidth = 0.2
         containerView.layer.cornerRadius = 15
+
         
         NSLayoutConstraint.activate([
             containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
