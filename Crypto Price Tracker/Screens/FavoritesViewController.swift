@@ -14,7 +14,7 @@ class FavoritesViewController: UIViewController {
     var viewModel: FavoritesViewModel!
     var tableView = UITableView()
     var padding: CGFloat = 10
-    
+    var emptyStateView: CPEmptyStateView!
     
     init(viewModel: FavoritesViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -32,6 +32,8 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         configureTableView()
+        configureEmptyStateView()
+
         callForFavorites()
     }
 
@@ -60,17 +62,30 @@ class FavoritesViewController: UIViewController {
     }
     
     
+    func configureEmptyStateView() {
+        guard let image = UIImage(systemName: "list.star") else { return }
+        let message = "Your favorites list is empty."
+        
+        
+        emptyStateView = CPEmptyStateView(message: message, image: image)
+        emptyStateView.backgroundColor = .systemBackground
+        view.addSubviewsAndSetTamicToFalse(views: emptyStateView)
+        
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emptyStateView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
     func configureTableView() {
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
-        
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.separatorStyle = .none
         tableView.rowHeight = 110
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .systemGray5
         view.addSubviewsAndSetTamicToFalse(views: tableView)
         
         NSLayoutConstraint.activate([
@@ -87,8 +102,9 @@ class FavoritesViewController: UIViewController {
 //MARK: - TableView Extension
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(viewModel.favoriteCoins.count)
-        return viewModel.favoriteCoins.count
+        let count = viewModel.favoriteCoins.count
+        if count == 0 { emptyStateView.isHidden = false } else { emptyStateView.isHidden = true }
+        return count
         
     }
     
@@ -103,7 +119,6 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let coinId = viewModel.favoriteCoins[indexPath.row].id {
-            print(coinId)
             
             let detailVC = DetailCoinViewController(viewModel: DetailCoinViewModel(coinId: coinId))
             self.navigationController?.pushViewController(detailVC, animated: true)

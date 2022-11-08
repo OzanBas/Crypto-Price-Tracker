@@ -41,22 +41,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     
-    func createSearchNavigationController() -> UINavigationController {
-        let searchVC = SearchViewController()
+    func createSearchViewController() -> SearchViewController {
+        let searchVC = SearchViewController(viewModel: SearchViewModel())
         searchVC.title = "Search"
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        return UINavigationController(rootViewController: searchVC)
+        return searchVC
     }
     
     
     func createTabBar() -> UITabBarController {
         let tabBar = UITabBarController()
         UITabBar.appearance().tintColor = .orange
-        let navigationControllersArray = [createListNavigationController(), createFavoritesNavigationController(), createSearchNavigationController()]
-        for navi in navigationControllersArray {
-            navi.navigationBar.tintColor = .orange
-        }
+        let listNavigationVC = createListNavigationController()
+        let favoriteNavigationVC = createFavoritesNavigationController()
+        let searchVC = createSearchViewController()
+        
+        listNavigationVC.navigationBar.tintColor = .orange
+        favoriteNavigationVC.navigationBar.tintColor = .orange
+        
+        let navigationControllersArray = [listNavigationVC, favoriteNavigationVC, searchVC]
         tabBar.viewControllers = navigationControllersArray
+        
         return tabBar
     }
     

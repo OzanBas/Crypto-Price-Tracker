@@ -20,7 +20,6 @@ enum PersistenceManager {
         retrieveFavorites { result in
             switch result {
             case .success(var favorites):
-                print(favorites.count)
                     if favorites.contains(where: { $0.name == favorite.name })  {
                         favorites.removeAll { $0.name == favorite.name }
                         let error = saveToFavorites(coins: favorites)

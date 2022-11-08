@@ -10,6 +10,8 @@
 		3F261DBB2913D8B20058844B /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBA2913D8B20058844B /* Int+Ext.swift */; };
 		3F261DBD2915002C0058844B /* CPDataRequesterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBC2915002C0058844B /* CPDataRequesterVC.swift */; };
 		3F261DBF2915376F0058844B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F261DBE2915376F0058844B /* FavoriteCell.swift */; };
+		3F52FE9C291A6A8C009FC790 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F52FE9B291A6A8C009FC790 /* SearchViewModel.swift */; };
+		3F52FE9E291A9BA7009FC790 /* CPEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F52FE9D291A9BA7009FC790 /* CPEmptyStateView.swift */; };
 		3FBE33A828FB07450085BF21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A728FB07450085BF21 /* AppDelegate.swift */; };
 		3FBE33AA28FB07450085BF21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE33A928FB07450085BF21 /* SceneDelegate.swift */; };
 		3FBE33B128FB07460085BF21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FBE33B028FB07460085BF21 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 		3F261DBA2913D8B20058844B /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		3F261DBC2915002C0058844B /* CPDataRequesterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPDataRequesterVC.swift; sourceTree = "<group>"; };
 		3F261DBE2915376F0058844B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		3F52FE9B291A6A8C009FC790 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		3F52FE9D291A9BA7009FC790 /* CPEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPEmptyStateView.swift; sourceTree = "<group>"; };
 		3FBE33A428FB07450085BF21 /* Crypto Price Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto Price Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBE33A728FB07450085BF21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FBE33A928FB07450085BF21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 				3FBE33C728FB115B0085BF21 /* ListViewModel.swift */,
 				3FBE33ED28FFE9990085BF21 /* DetailCoinViewModel.swift */,
 				3FD7F9912918E1AA00F32E22 /* FavoritesViewModel.swift */,
+				3F52FE9B291A6A8C009FC790 /* SearchViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */,
+				3F52FE9D291A9BA7009FC790 /* CPEmptyStateView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -336,6 +342,7 @@
 			files = (
 				3FCD06402912A1DF00298662 /* CPCoinCardView.swift in Sources */,
 				3FBE33F22902A2460085BF21 /* UIImageView+Ext.swift in Sources */,
+				3F52FE9E291A9BA7009FC790 /* CPEmptyStateView.swift in Sources */,
 				3FBE33E828FED8910085BF21 /* UIViewController+Ext.swift in Sources */,
 				3FBE33E628FECF510085BF21 /* CPAlertViewController.swift in Sources */,
 				3FBE33D128FB36060085BF21 /* ListModel.swift in Sources */,
@@ -352,6 +359,7 @@
 				3F261DBD2915002C0058844B /* CPDataRequesterVC.swift in Sources */,
 				3FD7F9922918E1AA00F32E22 /* FavoritesViewModel.swift in Sources */,
 				3FBE33CA28FB143E0085BF21 /* SearchViewController.swift in Sources */,
+				3F52FE9C291A6A8C009FC790 /* SearchViewModel.swift in Sources */,
 				3FBE33EA28FF49280085BF21 /* PersistenceManager.swift in Sources */,
 				3FBE33CD28FB2CA30085BF21 /* ListCollectionViewCell.swift in Sources */,
 				3FBE33C828FB115B0085BF21 /* ListViewModel.swift in Sources */,
