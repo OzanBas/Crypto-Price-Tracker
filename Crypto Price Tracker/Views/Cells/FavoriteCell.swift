@@ -31,6 +31,7 @@ class FavoriteCell: UITableViewCell {
         cardView = CPCoinCardView(coinDetails: coinDetails)
         addSubviewsAndSetTamicToFalse(views: containerView)
         containerView.addSubviewsAndSetTamicToFalse(views: cardView)
+        cardView.favoriteButton.isHidden = true
 
         
         NSLayoutConstraint.activate([

@@ -22,7 +22,7 @@ class CPCoinCardView: UIView {
     private var coinPriceLabel = CPExplanatoryLabel()
     private var coinTitleLabel = CPNameLabel()
     private var coinPriceChangeLabel = CPNameLabel()
-    private var favoriteButton = CPFavoriteButton(frame: .zero)
+    var favoriteButton = CPFavoriteButton(frame: .zero)
     
     private let padding: CGFloat = 10
     private let paddingXL: CGFloat = 20

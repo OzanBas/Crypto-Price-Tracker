@@ -11,6 +11,7 @@ import Foundation
 
 // MARK: - Welcome
 struct CoinModel: Codable {
+    var id: String?
     var symbol: String?
     var name: String?
     var localization: Tion?

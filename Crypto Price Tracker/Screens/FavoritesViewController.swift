@@ -46,9 +46,8 @@ class FavoritesViewController: UIViewController {
         viewModel.loadFavorites(completion: { [weak self] Result in
             guard let self = self else { return }
             switch Result {
-            case.success(let coins):
-                self.tableView.reloadData()
-                print(coins.count)
+            case.success(_):
+                DispatchQueue.main.async { self.tableView.reloadData() }
             case.failure(let error):
                 self.presentCPAlertOnMainThread(title: "Something went wrong.", message: error.rawValue, buttonText: "Ok")
             }
@@ -68,7 +67,6 @@ class FavoritesViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.rowHeight = 110
         tableView.delegate = self
         tableView.dataSource = self
@@ -99,6 +97,29 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseId) as! FavoriteCell
         cell.coinDetails = viewModel.favoriteCoins[indexPath.row]
         cell.set()
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let coinId = viewModel.favoriteCoins[indexPath.row].id {
+            print(coinId)
+            
+            let detailVC = DetailCoinViewController(viewModel: DetailCoinViewModel(coinId: coinId))
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let favorite = viewModel.favoriteCoins[indexPath.row]
+        
+        PersistenceManager.update(favorite: favorite) { [weak self] error in
+            guard let self = self else { return }
+            self.presentCPAlertOnMainThread(title: "Deleting Error", message: error?.rawValue ?? "error", buttonText: "Ok")
+        }
+        self.callForFavorites()
+        self.tableView.reloadData()
+        
     }
 }

@@ -28,7 +28,7 @@ enum PersistenceManager {
                             completion(.savingError)
                             return
                         }
-                        completion(.removingAlert)
+//                        completion(.removingAlert)
                         return
                     } else {
                         favorites.append(favorite)
@@ -37,7 +37,7 @@ enum PersistenceManager {
                             completion(.savingError)
                             return
                         }
-                        completion(.addingAlert)
+//                        completion(.addingAlert)
                     }
             case .failure(let error):
                 completion(error)
