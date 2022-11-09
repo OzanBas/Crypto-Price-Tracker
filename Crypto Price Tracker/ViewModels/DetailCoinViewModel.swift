@@ -8,13 +8,13 @@
 import UIKit
 
 
-class DetailCoinViewModel {
+final class DetailCoinViewModel {
     
     
     var coinId: String!
     var coinDetail: CoinModel!
-    var service = NetworkManager()
-    var error: CPError?
+    private var service = NetworkManager()
+    private var error: CPError?
     
     
     init(coinId: String) {

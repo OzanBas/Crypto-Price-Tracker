@@ -12,9 +12,11 @@ enum PersistenceManager {
     
     static let defaults = UserDefaults.standard
     
+    
     enum Keys {
         static let favorites = "favorites"
     }
+    
     
     static func update(favorite: CoinModel, completion: @escaping(CPError?) -> Void) {
         retrieveFavorites { result in
@@ -71,7 +73,5 @@ enum PersistenceManager {
             completion(.failure(.retrievingFavorites))
         }
     }
-    
-    
 }
 

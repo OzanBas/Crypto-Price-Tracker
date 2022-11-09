@@ -59,7 +59,7 @@ class CPEmptyStateView: UIView {
         var width: CGFloat { return UIScreen.main.bounds.width }
         var height: CGFloat { return UIScreen.main.bounds.width }
 
-        logoImageView.image = UIImage(systemName: "waveform.and.magnifyingglass")
+        logoImageView.image = Images.emptyStateSearch
         logoImageView.tintColor = .orange
         logoImageView.backgroundColor = .systemBackground
         logoImageView.contentMode = .scaleAspectFit

@@ -7,15 +7,14 @@
 
 import UIKit
 
-class SearchViewController: CPDataRequesterVC {
+final class SearchViewController: CPDataRequesterVC {
 
-    
-    var searchBar: UISearchBar!
-    var viewModel: SearchViewModel!
-    var titleLabel: CPNameLabel!
-    var cardView: CPCoinCardView!
-    var detailScrollView: CPDetailScrollView!
-    var emptyStateView: CPEmptyStateView!
+    private var titleLabel: CPNameLabel!
+    private var searchBar: UISearchBar!
+    private var viewModel: SearchViewModel!
+    private var cardView: CPCoinCardView!
+    private var detailScrollView: CPDetailScrollView!
+    private var emptyStateView: CPEmptyStateView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +32,8 @@ class SearchViewController: CPDataRequesterVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func requestNetworkCall(coinId: String) {
+//MARK: - Actions
+    private func requestNetworkCall(coinId: String) {
         viewModel.coinId = coinId
         
         showActivityIndicator()
@@ -50,50 +49,46 @@ class SearchViewController: CPDataRequesterVC {
             }
         }
     }
+
     
-    
+    private func createDismissKeyboardTapGesture(for view: UIView) {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
     
 //MARK: - Configurations
-    func configureViewController() {
+    private func configureViewController() {
+        self.title = "Search"
         view.backgroundColor = .systemBackground
         configureTitleLabel()
         configureSearchBar()
         configureEmptyStateView()
-
+        createDismissKeyboardTapGesture(for: view)
+      }
+    
+    
+    private func setUIElementsOnMainThread() {
+        DispatchQueue.main.async {
+            self.configureCardView()
+            self.configureDetailScrollView()
+        }
     }
     
-    func configureEmptyStateView() {
-        emptyStateView = CPEmptyStateView(message: "Search for your gem.")
-        view.addSubviewsAndSetTamicToFalse(views: emptyStateView)
-        emptyStateView.isHidden = false
-        
-        NSLayoutConstraint.activate([
-            emptyStateView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            emptyStateView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-    }
-    
-    
-    
-    func configureTitleLabel() {
+    private func configureTitleLabel() {
         titleLabel = CPNameLabel()
-        view.addSubviewsAndSetTamicToFalse(views: titleLabel)
-        titleLabel.text = "Search"
         titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+        titleLabel.text = "Search"
         
+        view.addSubviewsAndSetTamicToFalse(views: titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            titleLabel.widthAnchor.constraint(equalToConstant: 100),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 26)
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
     
-    
-    func configureSearchBar() {
+    private func configureSearchBar() {
         searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.returnKeyType = .search
@@ -105,28 +100,33 @@ class SearchViewController: CPDataRequesterVC {
         
         view.addSubviewsAndSetTamicToFalse(views: searchBar)
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             searchBar.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
+    
+    private func configureEmptyStateView() {
+        emptyStateView = CPEmptyStateView(message: "Search for your gem.")
+        emptyStateView.isHidden = false
 
-
-    func setUIElementsOnMainThread() {
-        DispatchQueue.main.async {
-            self.configureCardView()
-            self.configureDetailScrollView()
-        }
+        view.addSubviewsAndSetTamicToFalse(views: emptyStateView)
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emptyStateView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
-    
-    
-    func configureCardView() {
+
+
+    private func configureCardView() {
         cardView = CPCoinCardView(coinDetails: viewModel.coinDetails)
         cardView.buttonDelegate = self
-        view.addSubviewsAndSetTamicToFalse(views: cardView)
         
+        view.addSubviewsAndSetTamicToFalse(views: cardView)
         NSLayoutConstraint.activate([
             cardView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
             cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -135,12 +135,14 @@ class SearchViewController: CPDataRequesterVC {
         ])
     }
     
-    func configureDetailScrollView() {
+    
+    private func configureDetailScrollView() {
         detailScrollView = CPDetailScrollView(coinDetails: viewModel.coinDetails)
-        detailScrollView.scrollViewButtonDelegate = self
-        view.addSubviewsAndSetTamicToFalse(views: detailScrollView)
         detailScrollView.setElements(coinDetails: viewModel.coinDetails)
+
+        detailScrollView.scrollViewButtonDelegate = self
         
+        view.addSubviewsAndSetTamicToFalse(views: detailScrollView)
         NSLayoutConstraint.activate([
             detailScrollView.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 15),
             detailScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -151,24 +153,20 @@ class SearchViewController: CPDataRequesterVC {
 }
 
 
-
+//MARK: - SearchBar+Ext
 extension SearchViewController: UISearchBarDelegate {
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.resignFirstResponder()
         return true
     }
+ 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text?.lowercased() else { return }
         emptyStateView.isHidden = true
         requestNetworkCall(coinId: text)
     }
-    
-    
-
 }
-
-
 
 
 //MARK: - DetailScrollViewButtonProtocol
@@ -181,6 +179,8 @@ extension SearchViewController: DetailScrollViewButtonProtocol {
         self.displayOnSafariVC(with: url)
     }
 }
+
+
 //MARK: - FavoriteButtonProtocol
 extension SearchViewController: FavoriteButtonProtocol {
     func didTapFavoriteButton(for coin: CoinModel) {

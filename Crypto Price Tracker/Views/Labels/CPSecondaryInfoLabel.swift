@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CPSecondaryInfoLabel: UILabel {
+final class CPSecondaryInfoLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

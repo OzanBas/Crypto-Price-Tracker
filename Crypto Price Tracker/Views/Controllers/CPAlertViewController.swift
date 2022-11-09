@@ -9,10 +9,11 @@ import UIKit
 
 class CPAlertViewController: UIViewController {
 
-    var containerView =  UIView()
-    var alertTitleLabel = CPNameLabel()
-    var alertInfoLabel = CPSecondaryInfoLabel()
-    var alertActionButton = UIButton(frame: .zero)
+//MARK: - Properties
+    private var containerView =  UIView()
+    private var alertTitleLabel = CPNameLabel()
+    private var alertInfoLabel = CPSecondaryInfoLabel()
+    private var alertActionButton = UIButton(frame: .zero)
     
     
     override func viewDidLoad() {
@@ -36,7 +37,12 @@ class CPAlertViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+//MARK: - Actions
+    @objc func dismissAlert() {
+        self.dismiss(animated: true)
+    }
+    
+//MARK: - Configuration
     func configureContainerView() {
         view.addSubviewsAndSetTamicToFalse(views: containerView)
         containerView.backgroundColor =  .systemGray5
@@ -65,6 +71,7 @@ class CPAlertViewController: UIViewController {
         ])
     }
     
+    
     func configureAlertInfoLabel() {
         
         containerView.addSubviewsAndSetTamicToFalse(views: alertInfoLabel)
@@ -79,6 +86,7 @@ class CPAlertViewController: UIViewController {
             alertInfoLabel.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
+    
     
     func configureAlertButton() {
         containerView.addSubviewsAndSetTamicToFalse(views: alertActionButton)
@@ -96,9 +104,4 @@ class CPAlertViewController: UIViewController {
             alertActionButton.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
-    
-    @objc func dismissAlert() {
-        self.dismiss(animated: true)
-    }
-    
 }

@@ -7,9 +7,9 @@
 
 import Foundation
 
-class SearchViewModel {
+final class SearchViewModel {
     
-    let service = NetworkManager()
+    private let service = NetworkManager()
     var coinDetails: CoinModel!
     var coinId: String?
     

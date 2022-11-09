@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CPLogoImageView: UIImageView {
+final class CPLogoImageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -23,7 +23,7 @@ class CPLogoImageView: UIImageView {
         clipsToBounds = true
         layer.cornerRadius =  10
         tintColor = .orange
-        image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        image = Images.placeHolderImage
         
     }
 }

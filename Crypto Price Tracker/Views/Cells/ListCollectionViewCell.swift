@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ListCollectionViewCell: UICollectionViewCell {
+final class ListCollectionViewCell: UICollectionViewCell {
     
-    
-    let service = NetworkManager()
+//MARK: - Properties
+    private let service = NetworkManager()
     static let reuseId = "ListCollectionViewCell"
     
     private var cellContainerView = UIView()
@@ -30,7 +30,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+//MARK: - Actions
     func set(coin: ListModel) {
         coinNameLabel.text = coin.name
         priceLabel.text = coin.currentPrice.formatToDisplayablePriceText()
@@ -43,7 +43,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    
+//MARK: - Configuration
     func configurePriceChangeImage(for coin: ListModel) {
         guard coin.priceChangePercentage24H > 0 else {
             priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")

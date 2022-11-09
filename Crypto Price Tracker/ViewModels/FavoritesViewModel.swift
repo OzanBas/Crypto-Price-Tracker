@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavoritesViewModel {
+final class FavoritesViewModel {
     
     
     var favoriteCoins: [CoinModel] = []

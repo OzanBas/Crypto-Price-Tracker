@@ -31,6 +31,7 @@ class CPDataRequesterVC: UIViewController {
         activityIndicator.startAnimating()
     }
     
+    
     func dismissActivityIndicator() {
         DispatchQueue.main.async {
             self.contentView.removeFromSuperview()

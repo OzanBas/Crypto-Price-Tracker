@@ -8,15 +8,17 @@
 import UIKit
 
 
-class NetworkManager {
+final class NetworkManager {
+
+//MARK: - Properties
+    private let baseURL = Endpoints.baseURL
+    private let listEndpoint = Endpoints.list
+    private let coinEndpoint = Endpoints.coin
     
-    private let baseURL = "https://api.coingecko.com/api/v3"
-    private let listEndpoint = "/coins/markets?vs_currency=usd"
-    private let coinEndpoint = "?tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false"
     private let decoder = JSONDecoder()
     private let cache = NSCache<NSString, UIImage>()
     
-    
+    //MARK: - Fetch List
     func getCoinsList() async throws -> [ListModel] {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
@@ -41,13 +43,13 @@ class NetworkManager {
         }
     }
     
-    
+    //MARK: - Fetch Coin Details
     func getCoinDetail(coinId: String, completion: @escaping (Result<CoinModel, CPError>) -> Void) {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
 
         
-        let endpoint = baseURL + "/coins/" + coinId
+        let endpoint = baseURL + coinEndpoint + coinId
         let url = URL(string: endpoint)
         
         guard let url = url else { return }
@@ -75,8 +77,15 @@ class NetworkManager {
         dataTask.resume()
     }
     
-    
+    //MARK: - Fetch Coin Images
     func getCoinImage(for imageUrl: String, completion: @escaping(UIImage?) -> Void) {
+        let cacheKey = NSString(string: imageUrl)
+        
+        if let image = cache.object(forKey: cacheKey) {
+            completion(image)
+            return
+        }
+        
         guard let url = URL(string: imageUrl) else { return }
         
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -87,10 +96,10 @@ class NetworkManager {
                 completion(nil)
                 return
             }
-            completion(UIImage(data: data))
+            guard let image = UIImage(data: data) else { return }
+            self?.cache.setObject(image, forKey: cacheKey)
+            completion(image)
         }
         dataTask.resume()
     }
-    
-    
 }

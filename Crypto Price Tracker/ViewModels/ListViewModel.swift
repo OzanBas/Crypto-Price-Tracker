@@ -8,9 +8,9 @@
 import Foundation
 
 
-class ListViewModel {
+final class ListViewModel {
     
-    let service = NetworkManager()
+    private let service = NetworkManager()
     var coins: [ListModel] = []
     var filteredCoins: [ListModel] = []
     

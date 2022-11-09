@@ -34,7 +34,8 @@ class DetailCoinViewController: CPDataRequesterVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+
+//MARK: - Actions
     func requestCoinDetails() {
         showActivityIndicator()
         viewModel.getCoinDetails { [weak self] result in
@@ -54,10 +55,7 @@ class DetailCoinViewController: CPDataRequesterVC {
     }
     
     
-
-
-    
-    //MARK: - Configuration
+//MARK: - Configuration
     func configureViewController() {
         view.backgroundColor = .systemBackground
     }

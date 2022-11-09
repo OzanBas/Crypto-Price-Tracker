@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CPFavoriteButton: UIButton {
+final class CPFavoriteButton: UIButton {
     
-    var buttonImage: UIImageView!
+    private var buttonImage: UIImageView!
     
     
     override init(frame: CGRect) {
@@ -34,17 +34,17 @@ class CPFavoriteButton: UIButton {
     }
     
     
-    func configureEmptyStar() {
+    func configureForNonFavorite() {
         backgroundColor = .systemGray6
-        buttonImage.image = UIImage(systemName: "star")
+        buttonImage.image = Images.nonFavorite
         buttonImage.contentMode = .scaleAspectFill
         buttonImage.tintColor = .orange
     }
     
     
-    func configureFilledStar() {
+    func configureForFavorite() {
         backgroundColor = .systemGray6
-        buttonImage.image = UIImage(systemName: "star.fill")
+        buttonImage.image = Images.favorite
         buttonImage.contentMode = .scaleAspectFill
         buttonImage.tintColor = .orange
     }

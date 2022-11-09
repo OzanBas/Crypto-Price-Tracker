@@ -7,14 +7,14 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController {
+final class FavoritesViewController: UIViewController {
 
     
 //MARK: - Properties
-    var viewModel: FavoritesViewModel!
-    var tableView = UITableView()
-    var padding: CGFloat = 10
-    var emptyStateView: CPEmptyStateView!
+    private var viewModel: FavoritesViewModel!
+    private var tableView = UITableView()
+    private var padding: CGFloat = 10
+    private var emptyStateView: CPEmptyStateView!
     
     init(viewModel: FavoritesViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -43,8 +43,8 @@ class FavoritesViewController: UIViewController {
         callForFavorites()
     }
 
-    
-    func callForFavorites() {
+//MARK: - Actions
+    private func callForFavorites() {
         viewModel.loadFavorites(completion: { [weak self] Result in
             guard let self = self else { return }
             switch Result {
@@ -56,13 +56,13 @@ class FavoritesViewController: UIViewController {
         })
     }
 //MARK: - Configuration
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         
     }
     
     
-    func configureEmptyStateView() {
+    private func configureEmptyStateView() {
         guard let image = UIImage(systemName: "list.star") else { return }
         let message = "Your favorites list is empty."
         
@@ -79,7 +79,7 @@ class FavoritesViewController: UIViewController {
         ])
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self

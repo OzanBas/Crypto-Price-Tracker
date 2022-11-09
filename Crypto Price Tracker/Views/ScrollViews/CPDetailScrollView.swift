@@ -7,13 +7,15 @@
 
 import UIKit
 
+//MARK: - Protocol:DetailScrollViewButtonProtocol
 protocol DetailScrollViewButtonProtocol {
     func didTapLinkButton(urlString: String)
 }
 
-
+//MARK: - Class:CPDetailScrollView
 final class CPDetailScrollView: UIScrollView {
     
+//MARK: - Properties
     var scrollViewButtonDelegate: DetailScrollViewButtonProtocol?
     var coinDetails: CoinModel!
     var contentView = UIView()
@@ -56,6 +58,7 @@ final class CPDetailScrollView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
+//MARK: - Actions
     func setElements(coinDetails: CoinModel) {
         marketCapRankLabel.text = coinDetails.marketCapRank?.formatted()
         let volume = coinDetails.marketData.totalVolume?["usd"]?.formatToDisplayablePriceText()
@@ -74,6 +77,12 @@ final class CPDetailScrollView: UIScrollView {
     }
 
     
+    @objc func goToLink() {
+        scrollViewButtonDelegate?.didTapLinkButton(urlString: linkButton.titleLabel?.text ?? "null")
+    }
+    
+    
+//MARK: - Configuration
     fileprivate func configureContentView() {
         addSubviewsAndSetTamicToFalse(views: contentView)
         
@@ -84,6 +93,7 @@ final class CPDetailScrollView: UIScrollView {
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
     
     fileprivate func configureCardView() {
         contentView.addSubviewsAndSetTamicToFalse(views: cardView)
@@ -150,6 +160,7 @@ final class CPDetailScrollView: UIScrollView {
         
     }
     
+    
     fileprivate func configureInfoLabels() {
 
         linkButton.addTarget(self, action: #selector(goToLink), for: .touchUpInside)
@@ -206,9 +217,4 @@ final class CPDetailScrollView: UIScrollView {
             descriptionLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -paddingXL)
         ])
     }
-    
-    @objc func goToLink() {
-        scrollViewButtonDelegate?.didTapLinkButton(urlString: linkButton.titleLabel?.text ?? "null")
-    }
-    
 }

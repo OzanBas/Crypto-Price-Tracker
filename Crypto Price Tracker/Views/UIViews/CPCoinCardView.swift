@@ -7,12 +7,15 @@
 
 import UIKit
 
+//MARK: - Protocol:FavoriteButtonProtocol
 protocol FavoriteButtonProtocol {
     func didTapFavoriteButton(for coin: CoinModel)
 }
 
-
-class CPCoinCardView: UIView {
+//MARK: - Class:CPCoinCardView
+final class CPCoinCardView: UIView {
+    
+//MARK: - Properties
     var buttonDelegate: FavoriteButtonProtocol?
     var coinDetails: CoinModel?
     private let service = NetworkManager()
@@ -46,7 +49,7 @@ class CPCoinCardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+ //MARK: - Actions
     func setElements(coinDetails: CoinModel) {
         configurePriceChangeImage(for: coinDetails)
         configureStarImage()
@@ -63,13 +66,19 @@ class CPCoinCardView: UIView {
     }
      
     
+    @objc func favoriteButtonAction() {
+        if let coinDetails = coinDetails {
+            buttonDelegate?.didTapFavoriteButton(for: coinDetails)
+        }
+    }
+//MARK: - Configuration
     private func configurePriceChangeImage(for coinDetails: CoinModel) {
         guard coinDetails.marketData.priceChangePercentage24H ?? 1 > 0 else {
-            priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
+            priceChangeImageView.image = Images.priceChangeDown
             priceChangeImageView.tintColor = .systemRed
             return
         }
-        priceChangeImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
+        priceChangeImageView.image = Images.priceChangeUp
         priceChangeImageView.tintColor = .systemGreen
     }
     
@@ -79,15 +88,14 @@ class CPCoinCardView: UIView {
             switch result {
             case .success(let coins):
                 if coins.contains(where: { $0.name == self.coinDetails?.name }) {
-                    self.favoriteButton.configureFilledStar()
+                    self.favoriteButton.configureForFavorite()
                 } else {
-                    self.favoriteButton.configureEmptyStar()
+                    self.favoriteButton.configureForNonFavorite()
                 }
             case .failure(_):
                 return
             }
         }
-        
     }
     
     private func configure() {
@@ -131,11 +139,4 @@ class CPCoinCardView: UIView {
             stackView.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
-    
-    @objc func favoriteButtonAction() {
-        if let coinDetails = coinDetails {
-            buttonDelegate?.didTapFavoriteButton(for: coinDetails)
-        }
-    }
-    
 }

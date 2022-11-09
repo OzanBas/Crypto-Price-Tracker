@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ListViewController: CPDataRequesterVC {
+final class ListViewController: CPDataRequesterVC {
 
 //MARK: - Properties
-    var viewModel: ListViewModel!
-    var searchController: UISearchController!
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, ListModel>!
+    private var viewModel: ListViewModel!
+    private var searchController: UISearchController!
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ListModel>!
 
     enum Section {
         case main
@@ -24,7 +24,7 @@ class ListViewController: CPDataRequesterVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
-        requestFirstTimeNetworkCall()
+        requestNetworkCall()
     }
 
     
@@ -40,7 +40,7 @@ class ListViewController: CPDataRequesterVC {
     
 
 //MARK: - Actions
-    func updateData(with coins: [ListModel]) {
+    private func updateData(with coins: [ListModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ListModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(coins)
@@ -51,7 +51,7 @@ class ListViewController: CPDataRequesterVC {
     }
     
     
-    func requestFirstTimeNetworkCall() {
+    private func requestNetworkCall() {
         showActivityIndicator()
         viewModel.getCoinsList { [weak self] result in
             guard let self = self else { return }
@@ -66,39 +66,45 @@ class ListViewController: CPDataRequesterVC {
     }
     
     
+    private func navigateToDetailVC(coin: ListModel) {
+        let detailViewModel = DetailCoinViewModel(coinId: coin.id.lowercased())
+        let detailVC = DetailCoinViewController(viewModel: detailViewModel)
+        detailVC.title = coin.name
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }    
+    
+    
+    
+    private func createDismissKeyboardTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.searchController.searchBar.endEditing(true)
+    }
+
 //MARK: - Configuration
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         searchController = configureSearchController()
         configureCollectionView()
+        createDismissKeyboardTapGesture()
     }
       
     
-    func configureCollectionView() {
+    private func configureCollectionView() {
         let collectionView =  UICollectionView(frame: view.bounds, collectionViewLayout: twoColumnFlowLayout(for: view))
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.reuseId)
         collectionView.delegate = self
+        
         configureDataSource(collectionView: collectionView)
         view.addSubview(collectionView)
         
     }
     
     
-    func twoColumnFlowLayout(for view: UIView) -> UICollectionViewFlowLayout {
-        let width = view.bounds.width
-        let padding: CGFloat = 12
-        let itemSpacing: CGFloat = 10
-        let availableWidth = width - (padding * 2) - itemSpacing
-        let cellWidth = availableWidth / 2
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: cellWidth, height: cellWidth - 55)
-        return flowLayout
-    }
-
-    
-    func configureSearchController() -> UISearchController {
+    private func configureSearchController() -> UISearchController {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Filter results"
         searchController.searchResultsUpdater = self
@@ -109,14 +115,14 @@ class ListViewController: CPDataRequesterVC {
     }
     
     
-    func configureDataSource(collectionView: UICollectionView) {
+    private func configureDataSource(collectionView: UICollectionView) {
         dataSource = UICollectionViewDiffableDataSource<Section, ListModel>(collectionView: collectionView , cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reuseId, for: indexPath) as! ListCollectionViewCell
-            guard self.searchController.searchBar.text == "" else {
-                cell.set(coin: self.viewModel.filteredCoins[indexPath.item])
-                return cell
-            }
-            cell.set(coin: self.viewModel.coins[indexPath.item])
+            
+            let isNotFiltered = self.searchController.searchBar.text == ""
+            let coin = isNotFiltered ? self.viewModel.coins[indexPath.item] : self.viewModel.filteredCoins[indexPath.item]
+            cell.set(coin: coin)
+            
             return cell
         })
     }
@@ -142,18 +148,9 @@ extension ListViewController: UISearchResultsUpdating, UISearchControllerDelegat
 extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard viewModel.filteredCoins.count == 0 else {
-            let coinId = viewModel.filteredCoins[indexPath.row].id.lowercased()
-            let detailViewModel = DetailCoinViewModel(coinId: coinId)
-            let detailVC = DetailCoinViewController(viewModel: detailViewModel)
-            detailVC.title =  viewModel.filteredCoins[indexPath.row].name
-            self.navigationController?.pushViewController(detailVC, animated: true)
-            return
-        }
-        let coinId = viewModel.coins[indexPath.row].id.lowercased()
-        let detailViewModel = DetailCoinViewModel(coinId: coinId)
-        let detailVC = DetailCoinViewController(viewModel: detailViewModel)
-        detailVC.title =  viewModel.coins[indexPath.row].name
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        let isNotFiltered = viewModel.filteredCoins.count == 0
+        let coin = isNotFiltered ? viewModel.coins[indexPath.row] : viewModel.filteredCoins[indexPath.row]
+        
+        navigateToDetailVC(coin: coin)
     }
 }

@@ -7,8 +7,9 @@
 
 import UIKit
 
-class FavoriteCell: UITableViewCell {
+final class FavoriteCell: UITableViewCell {
     
+//MARK: - Properties
     static let reuseId = "FavoriteCell"
     var coinDetails: CoinModel!
     
@@ -25,7 +26,7 @@ class FavoriteCell: UITableViewCell {
     }
     
     
-    
+//MARK: - Configuration
     func set() {
         containerView = UIView()
         cardView = CPCoinCardView(coinDetails: coinDetails)
@@ -45,7 +46,5 @@ class FavoriteCell: UITableViewCell {
             cardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding * 2),
             cardView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -padding)
         ])
-        
     }
-
 }
