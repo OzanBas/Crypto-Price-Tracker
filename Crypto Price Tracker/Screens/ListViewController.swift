@@ -15,6 +15,7 @@ final class ListViewController: CPDataRequesterVC {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, ListModel>!
 
+
     enum Section {
         case main
     }
@@ -57,26 +58,27 @@ final class ListViewController: CPDataRequesterVC {
             guard let self = self else { return }
             self.dismissActivityIndicator()
             switch result {
-            case .success(let coins):
-                self.updateData(with: coins)
+            case .success(_):
+                self.updateData(with: self.viewModel.coins)
             case .failure(let error):
                 self.presentCPAlertOnMainThread(title: "No Internet Connection", message: error.rawValue, buttonText: "Ok")
             }
         }
     }
+
     
-    
-    private func navigateToDetailVC(coin: ListModel) {
-        let detailViewModel = DetailCoinViewModel(coinId: coin.id.lowercased())
+    func navigateToDetailVC(coin: ListModel) {
+        guard let coinId = coin.id else { return }
+        let detailViewModel = DetailCoinViewModel(coinId: coinId.lowercased())
         let detailVC = DetailCoinViewController(viewModel: detailViewModel)
         detailVC.title = coin.name
         self.navigationController?.pushViewController(detailVC, animated: true)
-    }    
-    
+    }
     
     
     private func createDismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
@@ -111,6 +113,7 @@ final class ListViewController: CPDataRequesterVC {
         searchController.obscuresBackgroundDuringPresentation =  false
         searchController.delegate = self
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         return searchController
     }
     
@@ -137,8 +140,8 @@ extension ListViewController: UISearchResultsUpdating, UISearchControllerDelegat
             viewModel.filteredCoins.removeAll()
             updateData(with: coins)
             return }
-        viewModel.filteredCoins = coins.filter { $0.name.lowercased().contains(searchText.lowercased())
-        }
+
+        viewModel.filteredCoins = coins.filter { $0.name!.lowercased().contains(searchText.lowercased()) }
         updateData(with: viewModel.filteredCoins)
     }
 }
@@ -153,4 +156,18 @@ extension ListViewController: UICollectionViewDelegate {
         
         navigateToDetailVC(coin: coin)
     }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y                // shows how much you scrolled down
+        let contentHeight = scrollView.contentSize.height       // shows initial content height
+        let height = scrollView.frame.size.height               // height of scrollview for current device
+        
+        if offsetY > contentHeight - height {
+            guard viewModel.moreCoinsAvailable, !viewModel.isLoadingMoreCoins else { return }
+            viewModel.page += 1
+            requestNetworkCall()
+            
+        }
+    }
 }
+

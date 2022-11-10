@@ -33,28 +33,34 @@ final class ListCollectionViewCell: UICollectionViewCell {
 //MARK: - Actions
     func set(coin: ListModel) {
         coinNameLabel.text = coin.name
-        priceLabel.text = coin.currentPrice.formatToDisplayablePriceText()
-        priceChangePercentage.text = coin.priceChangePercentage24H.formatToDisplayablePriceChangeText()
+        
+        
+        priceLabel.text = coin.currentPrice?.formatToDisplayablePriceText()
+        priceChangePercentage.text = coin.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
         configurePriceChangeImage(for: coin)
-        service.getCoinImage(for: coin.image) { image in
-            DispatchQueue.main.async {
-                self.coinLogoImageView.image = image
+        
+        if let coinImage = coin.image {
+            service.getCoinImage(for: coinImage) { image in
+                DispatchQueue.main.async {
+                    self.coinLogoImageView.image = image
+                }
             }
         }
     }
     
 //MARK: - Configuration
     func configurePriceChangeImage(for coin: ListModel) {
-        guard coin.priceChangePercentage24H > 0 else {
-            priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
-            priceChangeImageView.tintColor = .systemRed
+        if let coinPriceChange = coin.priceChangePercentage24H {
+            guard coinPriceChange > 0 else {
+                priceChangeImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
+                priceChangeImageView.tintColor = .systemRed
+                return
+            }
+            priceChangeImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
+            priceChangeImageView.tintColor = .systemGreen
             return
         }
-        priceChangeImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
-        priceChangeImageView.tintColor = .systemGreen
-        return
     }
-    
     
     func configureCellElements() {
         addSubviewsAndSetTamicToFalse(views: cellContainerView,

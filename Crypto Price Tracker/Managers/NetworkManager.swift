@@ -14,33 +14,32 @@ final class NetworkManager {
     private let baseURL = Endpoints.baseURL
     private let listEndpoint = Endpoints.list
     private let coinEndpoint = Endpoints.coin
+    private let paginationEndpoint = Endpoints.pagination
     
     private let decoder = JSONDecoder()
     private let cache = NSCache<NSString, UIImage>()
     
     //MARK: - Fetch List
-    func getCoinsList() async throws -> [ListModel] {
+    func getCoinsList(page: Int) async throws -> [ListModel] {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let endpoint = baseURL + listEndpoint
+        let pageString = String(page)
+        let endpoint = baseURL + listEndpoint + paginationEndpoint + pageString
         
         guard let url = URL(string: endpoint) else {
             throw CPError.badEndpoint
         }
         
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw CPError.badResponse
-            }
-            do {
-                return try decoder.decode([ListModel].self, from: data)
-            } catch {
-                throw CPError.parsingError
-            }
-        } catch {
-            throw CPError.NoInternetConnection
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw CPError.badResponse
         }
+        do {
+            return try decoder.decode([ListModel].self, from: data)
+        } catch {
+            throw CPError.parsingError
+        }
+        
     }
     
     //MARK: - Fetch Coin Details
@@ -85,7 +84,6 @@ final class NetworkManager {
             completion(image)
             return
         }
-        
         guard let url = URL(string: imageUrl) else { return }
         
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in

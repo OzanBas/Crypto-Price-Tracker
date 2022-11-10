@@ -18,7 +18,8 @@ enum Images {
 }
 
 enum Endpoints {
-    static let baseURL  = "https://api.coingecko.com/api/v3"
-    static let list     = "/coins/markets?vs_currency=usd"
-    static let coin     = "/coins/"
+    static let baseURL      = "https://api.coingecko.com/api/v3"
+    static let list         = "/coins/markets?vs_currency=usd"
+    static let coin         = "/coins/"
+    static let pagination   = "&order=market_cap_desc&per_page=100&page="
 }

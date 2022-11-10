@@ -10,7 +10,8 @@ import UIKit
 extension UIImageView {
     
     func configurePriceChangeImage(for coin: ListModel) {
-        guard coin.priceChangePercentage24H > 0 else {
+        guard let coinChange = coin.priceChangePercentage24H else { return }
+        guard coinChange > 0 else {
             image = UIImage(systemName: "arrowtriangle.down.fill")
             tintColor = .systemRed
             return
