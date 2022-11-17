@@ -12,11 +12,11 @@ extension UIImageView {
     func configurePriceChangeImage(for coin: ListModel) {
         guard let coinChange = coin.priceChangePercentage24H else { return }
         guard coinChange > 0 else {
-            image = UIImage(systemName: "arrowtriangle.down.fill")
+            image = Images.priceChangeDown
             tintColor = .systemRed
             return
         }
-        image = UIImage(systemName: "arrowtriangle.up.fill")
+        image = Images.priceChangeUp
         tintColor = .systemGreen
     }
 }

@@ -11,6 +11,7 @@ final class ListCollectionViewCell: UICollectionViewCell {
     
 //MARK: - Properties
     private let service = NetworkManager()
+    var network: NetworkManager?
     static let reuseId = "ListCollectionViewCell"
     
     private var cellContainerView = UIView()
@@ -28,6 +29,11 @@ final class ListCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init(network: NetworkManager) {
+        self.init()
+        self.network = network
     }
     
 //MARK: - Actions

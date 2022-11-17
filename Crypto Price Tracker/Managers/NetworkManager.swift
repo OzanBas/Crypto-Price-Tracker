@@ -49,6 +49,7 @@ final class NetworkManager {
 
         
         let endpoint = baseURL + coinEndpoint + coinId
+        print(endpoint)
         let url = URL(string: endpoint)
         
         guard let url = url else { return }

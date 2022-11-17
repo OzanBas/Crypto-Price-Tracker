@@ -10,7 +10,7 @@ import Foundation
 
 final class ListViewModel {
     
-    private let service = NetworkManager()
+    let service = NetworkManager()
     var coins: [ListModel] = []
     var filteredCoins: [ListModel] = []
     var page: Int = 1

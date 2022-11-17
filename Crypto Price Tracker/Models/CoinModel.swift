@@ -16,10 +16,10 @@ struct CoinModel: Codable {
     var name: String?
     var localization: Tion?
     var description: Tion?
-    var links: Links
-    var image: Image
+    var links: Links?
+    var image: Image?
     var marketCapRank: Int?
-    var marketData: MarketData
+    var marketData: MarketData?
     var lastUpdated: String?
 }
 
@@ -59,8 +59,8 @@ struct MarketData: Codable {
 
 
 struct Image: Codable {
-    var thumb: String
-    var small: String
-    var large: String
+    var thumb: String?
+    var small: String?
+    var large: String?
 }
 

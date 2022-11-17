@@ -42,15 +42,18 @@ class DetailCoinViewController: CPDataRequesterVC {
             self?.dismissActivityIndicator()
             guard let self = self else { return }
             switch result {
-            case .success(let coin):
-                self.viewModel.coinDetail = coin
-                DispatchQueue.main.async {
-                    self.configureTopCard()
-                    self.configureDetailsCard()
-                }
+            case .success(_):
+                self.setCardElements(with: self.viewModel.coinDetail)
             case .failure(let error):
                 self.presentCPAlertOnMainThread(title: "Can't display info", message: error.rawValue, buttonText: "Ok")
             }
+        }
+    }
+    
+    func setCardElements(with coin: CoinModel) {
+        DispatchQueue.main.async {
+            self.configureTopCard()
+            self.configureDetailsCard()
         }
     }
     

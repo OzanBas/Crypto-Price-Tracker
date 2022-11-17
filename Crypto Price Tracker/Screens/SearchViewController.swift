@@ -8,12 +8,12 @@
 import UIKit
 
 final class SearchViewController: CPDataRequesterVC {
-
+    
     private var titleLabel: CPNameLabel!
     private var searchBar: UISearchBar!
     private var viewModel: SearchViewModel!
-    private var cardView: CPCoinCardView!
-    private var detailScrollView: CPDetailScrollView!
+    private var cardView: CPCoinCardView?
+    private var detailScrollView: CPDetailScrollView?
     private var emptyStateView: CPEmptyStateView!
     
     override func viewDidLoad() {
@@ -32,8 +32,10 @@ final class SearchViewController: CPDataRequesterVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-//MARK: - Actions
+    //MARK: - Actions
     private func requestNetworkCall(coinId: String) {
+        
+        
         viewModel.coinId = coinId
         
         showActivityIndicator()
@@ -41,22 +43,31 @@ final class SearchViewController: CPDataRequesterVC {
             guard let self = self else { return }
             self.dismissActivityIndicator()
             switch result {
-            case .success(let coinDetails):
-                self.viewModel.coinDetails = coinDetails
+            case .success(_):
+                self.removeCards()
                 self.setUIElementsOnMainThread()
             case .failure(let error):
                 self.presentCPAlertOnMainThread(title: "Requesting Error", message: error.rawValue, buttonText: "Ok")
             }
         }
     }
-
+    
     
     private func createDismissKeyboardTapGesture(for view: UIView) {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
-//MARK: - Configurations
+    //MARK: - Configurations
+    private func removeCards() {
+        DispatchQueue.main.async {
+            self.cardView?.removeFromSuperview()
+            self.detailScrollView?.removeFromSuperview()
+        }
+    }
+    
+    
+    
     private func configureViewController() {
         self.title = "Search"
         view.backgroundColor = .systemBackground
@@ -124,8 +135,9 @@ final class SearchViewController: CPDataRequesterVC {
 
     private func configureCardView() {
         cardView = CPCoinCardView(coinDetails: viewModel.coinDetails)
-        cardView.buttonDelegate = self
+        cardView?.buttonDelegate = self
         
+        guard let cardView = cardView else { return }
         view.addSubviewsAndSetTamicToFalse(views: cardView)
         NSLayoutConstraint.activate([
             cardView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
@@ -138,10 +150,11 @@ final class SearchViewController: CPDataRequesterVC {
     
     private func configureDetailScrollView() {
         detailScrollView = CPDetailScrollView(coinDetails: viewModel.coinDetails)
-        detailScrollView.setElements(coinDetails: viewModel.coinDetails)
-
-        detailScrollView.scrollViewButtonDelegate = self
+        detailScrollView?.setElements(coinDetails: viewModel.coinDetails)
+        detailScrollView?.scrollViewButtonDelegate = self
         
+        guard let detailScrollView = detailScrollView else { return }
+        guard let cardView = cardView else { return }
         view.addSubviewsAndSetTamicToFalse(views: detailScrollView)
         NSLayoutConstraint.activate([
             detailScrollView.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 15),

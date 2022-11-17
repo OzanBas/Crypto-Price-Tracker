@@ -28,8 +28,8 @@ final class DetailCoinViewModel {
         service.getCoinDetail(coinId: coinId) { result in
             switch result {
             case .success(let coin):
-                completion(.success(coin))
                 self.coinDetail = coin
+                completion(.success(coin))
             case .failure(let cpError):
                 completion(.failure(cpError))
             }

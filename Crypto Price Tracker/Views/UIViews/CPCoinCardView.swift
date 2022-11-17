@@ -54,17 +54,17 @@ final class CPCoinCardView: UIView {
         configurePriceChangeImage(for: coinDetails)
         configureStarImage()
         
-        self.coinPriceLabel.text = coinDetails.marketData.currentPrice?["usd"]?.formatToDisplayablePriceText()
+        self.coinPriceLabel.text = coinDetails.marketData?.currentPrice?["usd"]?.formatToDisplayablePriceText()
         self.coinTitleLabel.text = coinDetails.name
-        self.coinPriceChangeLabel.text = coinDetails.marketData.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
-        let coinImageUrl = coinDetails.image.large
-        service.getCoinImage(for: coinImageUrl) { image in
-            DispatchQueue.main.async {
-                self.coinLogoImageView.image = image
+        self.coinPriceChangeLabel.text = coinDetails.marketData?.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
+        if let coinImageUrl = coinDetails.image?.large {
+            service.getCoinImage(for: coinImageUrl) { image in
+                DispatchQueue.main.async {
+                    self.coinLogoImageView.image = image
+                }
             }
         }
     }
-     
     
     @objc func favoriteButtonAction() {
         if let coinDetails = coinDetails {
@@ -73,7 +73,7 @@ final class CPCoinCardView: UIView {
     }
 //MARK: - Configuration
     private func configurePriceChangeImage(for coinDetails: CoinModel) {
-        guard coinDetails.marketData.priceChangePercentage24H ?? 1 > 0 else {
+        guard coinDetails.marketData?.priceChangePercentage24H ?? 1 > 0 else {
             priceChangeImageView.image = Images.priceChangeDown
             priceChangeImageView.tintColor = .systemRed
             return

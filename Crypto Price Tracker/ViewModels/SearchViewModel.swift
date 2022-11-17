@@ -18,8 +18,8 @@ final class SearchViewModel {
         service.getCoinDetail(coinId: coinId) { result in
             switch result {
             case .success(let coin):
-                completion(.success(coin))
                 self.coinDetails = coin
+                completion(.success(coin))
             case .failure(let cpError):
                 completion(.failure(cpError))
             }

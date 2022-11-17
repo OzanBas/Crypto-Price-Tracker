@@ -122,6 +122,7 @@ final class ListViewController: CPDataRequesterVC {
         dataSource = UICollectionViewDiffableDataSource<Section, ListModel>(collectionView: collectionView , cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reuseId, for: indexPath) as! ListCollectionViewCell
             
+            cell.network = self.viewModel.service
             let isNotFiltered = self.searchController.searchBar.text == ""
             let coin = isNotFiltered ? self.viewModel.coins[indexPath.item] : self.viewModel.filteredCoins[indexPath.item]
             cell.set(coin: coin)

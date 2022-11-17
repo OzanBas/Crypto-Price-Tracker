@@ -58,14 +58,17 @@ final class CPDetailScrollView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+
+    
 //MARK: - Actions
     func setElements(coinDetails: CoinModel) {
         marketCapRankLabel.text = coinDetails.marketCapRank?.formatted()
-        let volume = coinDetails.marketData.totalVolume?["usd"]?.formatToDisplayablePriceText()
-        let circulation = coinDetails.marketData.circulatingSupply?.formatToThousandSeparatedText()
-        let totalCap = coinDetails.marketData.totalSupply?.formatToThousandSeparatedText()
-        let ath = coinDetails.marketData.ath?["usd"]?.formatToDisplayablePriceText()
-        let urlString = coinDetails.links.homepage?[0]
+        let volume = coinDetails.marketData?.totalVolume?["usd"]?.formatToDisplayablePriceText()
+        let circulation = coinDetails.marketData?.circulatingSupply?.formatToThousandSeparatedText()
+        let totalCap = coinDetails.marketData?.totalSupply?.formatToThousandSeparatedText()
+        let ath = coinDetails.marketData?.ath?["usd"]?.formatToDisplayablePriceText()
+        let urlString = coinDetails.links?.homepage?[0]
         
         volumeLabel.text = volume
         circulationLabel.text = circulation

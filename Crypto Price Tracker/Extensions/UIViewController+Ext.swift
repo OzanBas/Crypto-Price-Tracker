@@ -24,13 +24,6 @@ extension UIViewController {
         safariVC.preferredControlTintColor = .orange
         present(safariVC, animated: true)
     }
-    
-    
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.window?.endEditing(true)
-        super.touchesEnded(touches, with: event)
-    }
-    
 }
 
 
