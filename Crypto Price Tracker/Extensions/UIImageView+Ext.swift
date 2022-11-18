@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 extension UIImageView {
     
@@ -18,5 +19,11 @@ extension UIImageView {
         }
         image = Images.priceChangeUp
         tintColor = .systemGreen
+    }
+    
+    func setImage(with urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        kf.setImage(with: url)
     }
 }

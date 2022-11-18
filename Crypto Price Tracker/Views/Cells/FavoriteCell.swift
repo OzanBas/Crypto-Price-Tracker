@@ -27,7 +27,7 @@ final class FavoriteCell: UITableViewCell {
     
     
 //MARK: - Configuration
-    internal func set() {
+    func set() {
         containerView = UIView()
         cardView = CPCoinCardView(coinDetails: coinDetails)
         addSubviewsAndSetTamicToFalse(views: containerView)

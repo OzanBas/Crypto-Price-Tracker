@@ -42,6 +42,7 @@
 		3FCD063D2912765700298662 /* CPDetailScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063C2912765700298662 /* CPDetailScrollView.swift */; };
 		3FCD06402912A1DF00298662 /* CPCoinCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCD063F2912A1DF00298662 /* CPCoinCardView.swift */; };
 		3FD7F9922918E1AA00F32E22 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD7F9912918E1AA00F32E22 /* FavoritesViewModel.swift */; };
+		3FE0A96A2927936C00A9D5AB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3FE0A9692927936C00A9D5AB /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE0A96A2927936C00A9D5AB /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +300,9 @@
 			dependencies = (
 			);
 			name = "Crypto Price Tracker";
+			packageProductDependencies = (
+				3FE0A9692927936C00A9D5AB /* Kingfisher */,
+			);
 			productName = "Crypto Price Tracker";
 			productReference = 3FBE33A428FB07450085BF21 /* Crypto Price Tracker.app */;
 			productType = "com.apple.product-type.application";
@@ -326,6 +331,9 @@
 				Base,
 			);
 			mainGroup = 3FBE339B28FB07450085BF21;
+			packageReferences = (
+				3FE0A9682927936C00A9D5AB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 3FBE33A528FB07450085BF21 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -583,6 +591,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3FE0A9682927936C00A9D5AB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3FE0A9692927936C00A9D5AB /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3FE0A9682927936C00A9D5AB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3FBE339C28FB07450085BF21 /* Project object */;
 }

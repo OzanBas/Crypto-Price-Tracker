@@ -10,8 +10,6 @@ import UIKit
 final class ListCollectionViewCell: UICollectionViewCell {
     
 //MARK: - Properties
-    private let service = NetworkManager()
-    var network: NetworkManager?
     static let reuseId = "ListCollectionViewCell"
     
     private var cellContainerView = UIView()
@@ -26,30 +24,19 @@ final class ListCollectionViewCell: UICollectionViewCell {
         configureCellElements()
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    convenience init(network: NetworkManager) {
-        self.init()
-        self.network = network
     }
     
 //MARK: - Actions
     func set(coin: ListModel) {
         coinNameLabel.text = coin.name
-        
-        
         priceLabel.text = coin.currentPrice?.formatToDisplayablePriceText()
         priceChangePercentage.text = coin.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
         configurePriceChangeImage(for: coin)
-        
         if let coinImage = coin.image {
-            service.getCoinImage(for: coinImage) { image in
                 DispatchQueue.main.async {
-                    self.coinLogoImageView.image = image
-                }
+                    self.coinLogoImageView.setImage(with: coinImage)
             }
         }
     }

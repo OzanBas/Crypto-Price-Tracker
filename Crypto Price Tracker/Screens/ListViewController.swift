@@ -10,7 +10,7 @@ import UIKit
 final class ListViewController: CPDataRequesterVC {
 
 //MARK: - Properties
-    private var viewModel: ListViewModel!
+    private let viewModel: ListViewModel!
     private var searchController: UISearchController!
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, ListModel>!
@@ -30,8 +30,8 @@ final class ListViewController: CPDataRequesterVC {
 
     
     init(viewModel: ListViewModel) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     
@@ -122,9 +122,9 @@ final class ListViewController: CPDataRequesterVC {
         dataSource = UICollectionViewDiffableDataSource<Section, ListModel>(collectionView: collectionView , cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reuseId, for: indexPath) as! ListCollectionViewCell
             
-            cell.network = self.viewModel.service
             let isNotFiltered = self.searchController.searchBar.text == ""
             let coin = isNotFiltered ? self.viewModel.coins[indexPath.item] : self.viewModel.filteredCoins[indexPath.item]
+            
             cell.set(coin: coin)
             
             return cell

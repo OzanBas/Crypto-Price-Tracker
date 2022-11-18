@@ -18,7 +18,6 @@ final class CPCoinCardView: UIView {
 //MARK: - Properties
     var buttonDelegate: FavoriteButtonProtocol?
     var coinDetails: CoinModel?
-    private let service = NetworkManager()
     
     private var coinLogoImageView = CPLogoImageView(frame: .zero)
     private var priceChangeImageView = UIImageView()
@@ -58,10 +57,8 @@ final class CPCoinCardView: UIView {
         self.coinTitleLabel.text = coinDetails.name
         self.coinPriceChangeLabel.text = coinDetails.marketData?.priceChangePercentage24H?.formatToDisplayablePriceChangeText()
         if let coinImageUrl = coinDetails.image?.large {
-            service.getCoinImage(for: coinImageUrl) { image in
                 DispatchQueue.main.async {
-                    self.coinLogoImageView.image = image
-                }
+                    self.coinLogoImageView.setImage(with: coinImageUrl)
             }
         }
     }
