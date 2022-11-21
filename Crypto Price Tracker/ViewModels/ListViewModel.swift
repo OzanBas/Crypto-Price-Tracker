@@ -10,29 +10,36 @@ import Foundation
 
 final class ListViewModel {
     
-    let service = NetworkManager()
     var coins: [ListModel] = []
     var filteredCoins: [ListModel] = []
     var page: Int = 1
     var moreCoinsAvailable = true
     var isLoadingMoreCoins = false
     
+    //        let endpoint = baseURL + listEndpoint + paginationEndpoint + pageString
+
+    func generateEndpoint(for page: Int) -> String {
+        let endpoint = Endpoints.baseURL + Endpoints.list + Endpoints.pagination + String(page)
+        return endpoint
+    }
+    
+    
     
     func getCoinsList(completion: @escaping(Result<[ListModel], CPError>) -> Void) {
         
-        Task{
-            isLoadingMoreCoins = true
-            do {
-                let fetchedCoins = try await service.getCoinsList(page: page)
-                if fetchedCoins.count < 100  { moreCoinsAvailable = false}
-                self.coins.append(contentsOf: fetchedCoins)
-                completion(.success(fetchedCoins))
-            } catch {
-                if let cpError = error as? CPError {
-                    completion(.failure(cpError))
-                }
+        isLoadingMoreCoins = true
+        NetworkManager.shared.request(endpoint: generateEndpoint(for: page)) { [weak self] (result: Result<[ListModel], CPError>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let coins):
+                if coins.count < 100 { self.moreCoinsAvailable = false }
+                self.coins.append(contentsOf: coins)
+                completion(.success(coins))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            isLoadingMoreCoins = false
         }
+        
+        isLoadingMoreCoins = false
     }
 }

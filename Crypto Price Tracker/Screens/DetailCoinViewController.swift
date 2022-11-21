@@ -38,7 +38,7 @@ class DetailCoinViewController: CPDataRequesterVC {
 //MARK: - Actions
     func requestCoinDetails() {
         showActivityIndicator()
-        viewModel.getCoinDetails { [weak self] result in
+        viewModel.requestCoinDetails { [weak self] result in
             self?.dismissActivityIndicator()
             guard let self = self else { return }
             switch result {
